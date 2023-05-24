@@ -7,8 +7,8 @@ export type Post = {
   title: string;
   datetime: string;
   content: string;
-  votesCount: number;
-  commentsCount: number;
+  voteCount: number;
+  commentCount: number;
   comments: Comment[];
   user: User;
 };

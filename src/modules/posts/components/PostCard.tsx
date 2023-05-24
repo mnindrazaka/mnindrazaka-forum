@@ -6,12 +6,12 @@ import dayjs from "dayjs";
 
 export type PostCardProps = {
   voteCount: number;
-  onVoteUpPress: () => void;
-  onVoteDownPress: () => void;
+  onVoteUpPress?: () => void;
+  onVoteDownPress?: () => void;
   title: string;
   datetime: string;
   commentCount: number;
-  onCommentButtonPress: () => void;
+  onCommentButtonPress?: () => void;
 } & XStackProps;
 
 export function PostCard({

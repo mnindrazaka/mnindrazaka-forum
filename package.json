@@ -28,6 +28,7 @@
     "serve": "^14.2.0",
     "tamagui": "^1.29.4",
     "tamagui-loader": "^1.29.4",
+    "ts-pattern": "^4.3.0",
     "typescript": "5.0.4",
     "webpack": "^5.83.1"
   },

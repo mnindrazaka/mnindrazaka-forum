@@ -11,9 +11,9 @@ export type PostListItem = {
 
 export type PostListProps = {
   items: PostListItem[];
-  onVoteUpPress: () => void;
-  onVoteDownPress: () => void;
-  onCommentButtonPress: () => void;
+  onVoteUpPress?: () => void;
+  onVoteDownPress?: () => void;
+  onCommentButtonPress?: () => void;
   loadMore?: {
     isShow: boolean;
     isLoading: boolean;

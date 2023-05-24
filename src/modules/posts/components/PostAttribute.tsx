@@ -4,7 +4,7 @@ import { Button, XStack, XStackProps } from "tamagui";
 
 export type PostAttributeProps = {
   commentCount: number;
-  onCommentButtonPress: () => void;
+  onCommentButtonPress?: () => void;
 } & XStackProps;
 
 export function PostAttribute({
