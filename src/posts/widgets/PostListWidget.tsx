@@ -12,23 +12,23 @@ export function PostListWidget(_props: {}) {
     .with({ type: "loadingError" }, ({ errorMessage }) => (
       <Paragraph>{errorMessage}</Paragraph>
     ))
-    .with({ type: "main" }, ({ posts }) => (
+    .with({ type: "main" }, ({ posts, hasNextPage }) => (
       <PostList
         items={posts}
         loadMore={{
           isLoading: false,
-          isShow: true,
+          isShow: hasNextPage,
           onPress: () => send({ type: "fetchMore" }),
           title: "Load More",
         }}
       />
     ))
-    .with({ type: "loadingMore" }, ({ posts }) => (
+    .with({ type: "loadingMore" }, ({ posts, hasNextPage }) => (
       <PostList
         items={posts}
         loadMore={{
           isLoading: true,
-          isShow: true,
+          isShow: hasNextPage,
           onPress: () => send({ type: "fetchMore" }),
           title: "Load More",
         }}

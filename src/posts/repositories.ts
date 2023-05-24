@@ -1,41 +1,30 @@
 import { Post } from "./models";
+import * as fakers from "../fakers";
 
-export function getPostList() {
-  return new Promise<Post[]>((resolve, _reject) => {
-    setTimeout(() => {
-      const posts: Post[] = [
-        {
-          comments: [],
-          commentCount: 100,
-          voteCount: 255,
-          content: "Lorem Ipsum Dolor Sit Amet",
-          datetime: new Date().toISOString(),
-          serial: "1",
-          slug: "hokage-terbaik-sepanjang-sejarah-konoha",
-          title: "Hokage Terbaik Sepanjang Sejarah Konoha",
-          user: {
-            serial: "1",
-            name: "M. Nindra Zaka",
-            username: "mnindrazaka",
-          },
-        },
-        {
-          comments: [],
-          commentCount: 100,
-          voteCount: 255,
-          content: "Lorem Ipsum Dolor Sit Amet",
-          datetime: new Date().toISOString(),
-          serial: "2",
-          slug: "konten-terbaik-sepanjang-sejarah-konoha",
-          title: "Konten Terbaik Sepanjang Sejarah Konoha",
-          user: {
-            serial: "1",
-            name: "M. Nindra Zaka",
-            username: "mnindrazaka",
-          },
-        },
-      ];
-      return resolve(posts);
-    }, 3000);
-  });
+type GetPostListParams = {
+  page?: number;
+  pageSize?: number;
+  query?: string;
+  sortBy?: "hot" | "new";
+};
+
+export function getPostList({
+  page = 1,
+  pageSize = 20,
+  query = "",
+  sortBy = "new",
+}: GetPostListParams) {
+  return new Promise<{ posts: Post[]; hasNextPage: boolean }>(
+    (resolve, _reject) => {
+      setTimeout(() => {
+        const { data, hasNextPage } = fakers.getPostList({
+          page,
+          pageSize,
+          query,
+          sortBy,
+        });
+        return resolve({ posts: data, hasNextPage });
+      }, 3000);
+    }
+  );
 }
