@@ -37,3 +37,4 @@ next-env.d.ts
 # tamagui
 .tamagui
 public/tamagui.css
+/storybook-static
