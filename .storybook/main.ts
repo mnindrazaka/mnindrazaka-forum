@@ -48,7 +48,7 @@ const config: StorybookConfig = {
         "react-native-web$": "react-native-web-lite",
 
         // optional, for lighter svg icons on web
-        // 'react-native-svg': require.resolve('@tamagui/react-native-svg'),
+        "react-native-svg": require.resolve("@tamagui/react-native-svg"),
       },
     };
 

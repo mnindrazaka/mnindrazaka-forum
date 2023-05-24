@@ -9,6 +9,11 @@ import { TamaguiProvider } from "tamagui";
 import config from "../../tamagui.config";
 import Script from "next/script";
 
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+
+dayjs.extend(relativeTime);
+
 if (process.env.NODE_ENV === "production") {
   require("../../public/tamagui.css");
 }
