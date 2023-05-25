@@ -1,7 +1,11 @@
 import React from "react";
 import { match } from "ts-pattern";
 import { Post } from "../models";
-import { GetPostListParams, getPostList } from "../repositories";
+import {
+  GetPostListParams,
+  getPostList,
+  updateQueryURL,
+} from "../repositories";
 
 export type SortBy = "hot" | "new";
 
@@ -162,6 +166,7 @@ const onStateChange = (
       send({ type: "fetch" });
     })
     .with({ type: "loading" }, (state) => {
+      updateQueryURL({ query: state.query, sortBy: state.sortBy });
       getPostList({
         page: 1,
         pageSize: 1,

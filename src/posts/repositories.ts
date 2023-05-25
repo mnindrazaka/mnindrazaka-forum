@@ -30,3 +30,13 @@ type VotePostParams = {
 export function votePost({ slug, amount }: VotePostParams) {
   return fakers.votePost({ slug, amount });
 }
+
+export function updateQueryURL(params: {
+  query: string;
+  sortBy: "hot" | "new";
+}) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("query", params.query);
+  url.searchParams.set("sortBy", params.sortBy);
+  window.history.pushState(null, "", url.toString());
+}
