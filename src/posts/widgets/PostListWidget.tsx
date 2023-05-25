@@ -10,9 +10,10 @@ import {
   YStack,
 } from "tamagui";
 import { match } from "ts-pattern";
-import { PostCard, PostFilter } from "../components";
+import { PostFilter } from "../components";
 import { Skeleton } from "../../uikits/components";
 import { Post } from "../models";
+import { PostCardWidget } from "./PostCardWidget";
 
 const skeletonItems: Post[] = [
   {
@@ -103,7 +104,7 @@ export function PostListWidget(_props: {}) {
         />
         <YStack space="$3">
           {posts.map((post) => (
-            <PostCard key={post.serial} {...post} />
+            <PostCardWidget key={post.serial} {...post} />
           ))}
         </YStack>
 

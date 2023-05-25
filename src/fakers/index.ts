@@ -90,10 +90,6 @@ export function getPostList({
     const end = start + pageSize;
     const paginatedPosts = sortedPosts.slice(start, end);
 
-    if (page > 1) {
-      throw new Error("Error due to server hang");
-    }
-
     return {
       data: paginatedPosts,
       total: totalItem,
