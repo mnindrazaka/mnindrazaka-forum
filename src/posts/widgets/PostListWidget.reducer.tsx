@@ -9,22 +9,26 @@ type PostListWidgetState =
     }
   | {
       type: "loading";
+      query: string;
     }
   | {
       type: "loadingError";
       errorMessage: string;
+      query: string;
     }
   | {
       type: "main";
       posts: Post[];
       page: number;
       hasNextPage: boolean;
+      query: string;
     }
   | {
       type: "loadingMore";
       posts: Post[];
       page: number;
       hasNextPage: boolean;
+      query: string;
     }
   | {
       type: "loadingMoreError";
@@ -32,11 +36,16 @@ type PostListWidgetState =
       errorMessage: string;
       page: number;
       hasNextPage: boolean;
+      query: string;
     };
 
 type PostListWidgetAction =
   | {
       type: "fetch";
+    }
+  | {
+      type: "updateQuery";
+      query: string;
     }
   | {
       type: "fetchSuccess";
@@ -77,61 +86,83 @@ const reducer = (
     [PostListWidgetState, PostListWidgetAction],
     PostListWidgetState
   >([prevState, action])
-    .with([{ type: "idle" }, { type: "fetch" }], () => ({ type: "loading" }))
-    .with([{ type: "loading" }, { type: "fetchSuccess" }], ([_, action]) => ({
-      type: "main",
-      posts: action.posts,
-      page: 1,
-      hasNextPage: action.hasNextPage,
+    .with([{ type: "idle" }, { type: "fetch" }], () => ({
+      type: "loading",
+      query: "",
     }))
-    .with([{ type: "loading" }, { type: "fetchError" }], ([_, action]) => ({
+    .with([{ type: "loading" }, { type: "updateQuery" }], ([_, action]) => ({
+      type: "loading",
+      query: action.query,
+    }))
+    .with(
+      [{ type: "loading" }, { type: "fetchSuccess" }],
+      ([state, action]) => ({
+        type: "main",
+        posts: action.posts,
+        page: 1,
+        hasNextPage: action.hasNextPage,
+        query: state.query,
+      })
+    )
+    .with([{ type: "loading" }, { type: "fetchError" }], ([state, action]) => ({
       type: "loadingError",
       errorMessage: action.errorMessage,
+      query: state.query,
     }))
-    .with([{ type: "loadingError" }, { type: "refetch" }], () => ({
+    .with([{ type: "loadingError" }, { type: "refetch" }], ([state]) => ({
       type: "loading",
+      query: state.query,
     }))
-    .with([{ type: "main" }, { type: "fetchMore" }], ([prevState, action]) => ({
+    .with([{ type: "main" }, { type: "updateQuery" }], ([_, action]) => ({
+      type: "loading",
+      query: action.query,
+    }))
+    .with([{ type: "main" }, { type: "fetchMore" }], ([state, _]) => ({
       type: "loadingMore",
-      posts: prevState.posts,
-      page: prevState.page + 1,
-      hasNextPage: prevState.hasNextPage,
+      posts: state.posts,
+      page: state.page + 1,
+      hasNextPage: state.hasNextPage,
+      query: state.query,
     }))
     .with(
       [{ type: "loadingMore" }, { type: "fetchMoreSuccess" }],
-      ([prevState, action]) => ({
+      ([state, action]) => ({
         type: "main",
         posts: action.posts,
-        page: prevState.page,
+        page: state.page,
         hasNextPage: action.hasNextPage,
+        query: state.query,
       })
     )
     .with(
       [{ type: "loadingMore" }, { type: "fetchMoreError" }],
-      ([prevState, action]) => ({
+      ([state, action]) => ({
         type: "loadingMoreError",
-        posts: prevState.posts,
+        posts: state.posts,
         errorMessage: action.errorMessage,
-        page: prevState.page,
-        hasNextPage: prevState.hasNextPage,
+        page: state.page,
+        hasNextPage: state.hasNextPage,
+        query: state.query,
       })
     )
     .with(
       [{ type: "loadingMoreError" }, { type: "refetchMore" }],
-      ([prevState]) => ({
+      ([state]) => ({
         type: "loadingMore",
-        posts: prevState.posts,
-        page: prevState.page,
-        hasNextPage: prevState.hasNextPage,
+        posts: state.posts,
+        page: state.page,
+        hasNextPage: state.hasNextPage,
+        query: state.query,
       })
     )
     .with(
       [{ type: "loadingMoreError" }, { type: "fetchMoreCancel" }],
-      ([prevState]) => ({
+      ([state]) => ({
         type: "main",
-        posts: prevState.posts,
-        page: prevState.page - 1,
-        hasNextPage: prevState.hasNextPage,
+        posts: state.posts,
+        page: state.page - 1,
+        hasNextPage: state.hasNextPage,
+        query: state.query,
       })
     )
     .otherwise(() => prevState);
@@ -145,10 +176,11 @@ const onStateChange = (
     .with({ type: "idle" }, () => {
       send({ type: "fetch" });
     })
-    .with({ type: "loading" }, () => {
+    .with({ type: "loading" }, (state) => {
       getPostList({
         page: 1,
         pageSize: 1,
+        query: state.query,
       })
         .then(({ posts, hasNextPage }) =>
           send({ type: "fetchSuccess", posts, hasNextPage })

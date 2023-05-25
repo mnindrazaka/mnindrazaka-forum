@@ -75,17 +75,15 @@ export function getPostList({
   sortBy,
 }: GetPostListParams) {
   return simulateFetch(() => {
-    const filteredPosts = posts.filter((post) => post.title.includes(query));
+    const filteredPosts = posts.filter((post) =>
+      post.title.toLowerCase().includes(query)
+    );
     const totalItem = filteredPosts.length;
     const totalPage = Math.ceil(totalItem / pageSize);
 
     const start = pageSize * (page - 1);
     const end = start + pageSize;
     const paginatedPosts = filteredPosts.slice(start, end);
-
-    if (page !== 1) {
-      throw new Error("Server is down due to overload");
-    }
 
     return {
       data: paginatedPosts,

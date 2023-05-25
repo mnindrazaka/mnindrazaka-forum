@@ -6,9 +6,9 @@ type SortVariant = "hot" | "new";
 
 export type PostFilterProps = {
   searchValue: string;
-  onChangeSearchValue: (searchValue: string) => void;
+  onChangeSearchValue?: (searchValue: string) => void;
   selectedSort: SortVariant;
-  onChangeSort: (sort: SortVariant) => void;
+  onChangeSort?: (sort: SortVariant) => void;
 } & XStackProps;
 
 export function PostFilter({
@@ -22,7 +22,7 @@ export function PostFilter({
     backgroundColor:
       sort === selectedSort ? "$background" : "$backgroundStrong",
     disabled: sort === selectedSort,
-    onPress: () => onChangeSort(sort),
+    onPress: onChangeSort ? () => onChangeSort(sort) : undefined,
   });
   return (
     <XStack

@@ -5,6 +5,7 @@ import { match } from "ts-pattern";
 import { PostList } from "../components";
 import { Skeleton } from "../../uikits/components";
 import { Post } from "../models";
+import { PostFilter } from "../components/PostFilter";
 
 const skeletonItems: Post[] = [
   {
@@ -59,15 +60,23 @@ export function PostListWidget(_props: {}) {
   return match(state)
     .with({ type: "idle" }, () => (
       <Skeleton isLoading>
+        <PostFilter searchValue="" selectedSort="new" />
         <PostList items={skeletonItems} />
       </Skeleton>
     ))
-    .with({ type: "loading" }, () => (
+    .with({ type: "loading" }, (state) => (
       <Skeleton isLoading>
+        <PostFilter
+          searchValue={state.query}
+          onChangeSearchValue={(value) =>
+            send({ type: "updateQuery", query: value })
+          }
+          selectedSort="new"
+        />
         <PostList items={skeletonItems} />
       </Skeleton>
     ))
-    .with({ type: "loadingError" }, ({ errorMessage }) => (
+    .with({ type: "loadingError" }, ({ errorMessage, query }) => (
       <>
         <AlertDialog open>
           <AlertDialog.Portal>
@@ -81,6 +90,7 @@ export function PostListWidget(_props: {}) {
             </AlertDialog.Content>
           </AlertDialog.Portal>
         </AlertDialog>
+        <PostFilter searchValue={query} selectedSort="new" />
         <PostList
           items={[]}
           loadMore={{
@@ -91,29 +101,41 @@ export function PostListWidget(_props: {}) {
         />
       </>
     ))
-    .with({ type: "main" }, ({ posts, hasNextPage }) => (
-      <PostList
-        items={posts}
-        loadMore={{
-          isLoading: false,
-          isShow: hasNextPage,
-          onPress: () => send({ type: "fetchMore" }),
-        }}
-      />
+    .with({ type: "main" }, ({ posts, hasNextPage, query }) => (
+      <>
+        <PostFilter
+          searchValue={query}
+          onChangeSearchValue={(value) =>
+            send({ type: "updateQuery", query: value })
+          }
+          selectedSort="new"
+        />
+        <PostList
+          items={posts}
+          loadMore={{
+            isLoading: false,
+            isShow: hasNextPage,
+            onPress: () => send({ type: "fetchMore" }),
+          }}
+        />
+      </>
     ))
-    .with({ type: "loadingMore" }, ({ posts, hasNextPage }) => (
-      <PostList
-        items={posts}
-        loadMore={{
-          isLoading: true,
-          isShow: hasNextPage,
-          onPress: () => send({ type: "fetchMore" }),
-        }}
-      />
+    .with({ type: "loadingMore" }, ({ posts, hasNextPage, query }) => (
+      <>
+        <PostFilter searchValue={query} selectedSort="new" />
+        <PostList
+          items={posts}
+          loadMore={{
+            isLoading: true,
+            isShow: hasNextPage,
+            onPress: () => send({ type: "fetchMore" }),
+          }}
+        />
+      </>
     ))
     .with(
       { type: "loadingMoreError" },
-      ({ posts, hasNextPage, errorMessage }) => (
+      ({ posts, hasNextPage, errorMessage, query }) => (
         <>
           <AlertDialog open>
             <AlertDialog.Portal>
@@ -134,6 +156,7 @@ export function PostListWidget(_props: {}) {
               </AlertDialog.Content>
             </AlertDialog.Portal>
           </AlertDialog>
+          <PostFilter searchValue={query} selectedSort="new" />
           <PostList
             items={posts}
             loadMore={{
