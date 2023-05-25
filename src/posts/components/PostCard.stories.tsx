@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { PostCard } from "./PostCard";
+import { Skeleton } from "../../uikits/components";
 
 export default {
   component: PostCard,
@@ -14,3 +15,12 @@ Default.args = {
   voteCount: 285,
   commentCount: 685,
 };
+
+export const IsLoading = Template.bind({});
+IsLoading.args = {
+  title: "Hokage Terbaik Sepanjang Sejarah Konoha",
+  datetime: new Date().toISOString(),
+  voteCount: 285,
+  commentCount: 685,
+};
+IsLoading.decorators = [(Story) => <Skeleton isLoading>{Story()}</Skeleton>];

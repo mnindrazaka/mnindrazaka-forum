@@ -17,7 +17,7 @@ export type PostListProps = {
   loadMore?: {
     isShow: boolean;
     isLoading: boolean;
-    onPress: () => void;
+    onPress?: () => void;
   };
 } & XStackProps;
 

@@ -3,6 +3,7 @@ import React from "react";
 import { Button, H3, Paragraph, XStack, XStackProps, YStack } from "tamagui";
 import { PostAttribute } from "./PostAttribute";
 import dayjs from "dayjs";
+import { SkeletonItem } from "../../uikits/components";
 
 export type PostCardProps = {
   voteCount: number;
@@ -35,13 +36,27 @@ export function PostCard({
       {...containerProps}
     >
       <YStack alignItems="center" space="$2">
-        <Button icon={ChevronUp} size="$2" onPress={onVoteUpPress} />
-        <Paragraph>{voteCount}</Paragraph>
-        <Button icon={ChevronDown} size="$2" onPress={onVoteDownPress} />
+        <SkeletonItem>
+          <Button icon={ChevronUp} size="$2" onPress={onVoteUpPress} />
+        </SkeletonItem>
+
+        <SkeletonItem>
+          <Paragraph>{voteCount}</Paragraph>
+        </SkeletonItem>
+
+        <SkeletonItem>
+          <Button icon={ChevronDown} size="$2" onPress={onVoteDownPress} />
+        </SkeletonItem>
       </YStack>
       <YStack space="$3">
-        <H3>{title}</H3>
-        <Paragraph>Posted {dayjs(datetime).fromNow()}</Paragraph>
+        <SkeletonItem>
+          <H3>{title}</H3>
+        </SkeletonItem>
+
+        <SkeletonItem>
+          <Paragraph>Posted {dayjs(datetime).fromNow()}</Paragraph>
+        </SkeletonItem>
+
         <PostAttribute
           commentCount={commentCount}
           onCommentButtonPress={onCommentButtonPress}

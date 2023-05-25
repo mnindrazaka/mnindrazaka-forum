@@ -1,5 +1,6 @@
-import { Forward, Gift, MessageSquare } from "@tamagui/lucide-icons";
 import React from "react";
+import { SkeletonItem } from "../../uikits/components";
+import { Forward, Gift, MessageSquare } from "@tamagui/lucide-icons";
 import { Button, XStack, XStackProps } from "tamagui";
 
 export type PostAttributeProps = {
@@ -14,15 +15,23 @@ export function PostAttribute({
 }: PostAttributeProps) {
   return (
     <XStack space="$3" {...containerProps}>
-      <Button icon={MessageSquare} onPress={onCommentButtonPress} size="$3">
-        {`${commentCount} Comments`}
-      </Button>
-      <Button icon={Gift} size="$3">
-        Awards
-      </Button>
-      <Button icon={Forward} size="$3">
-        Share
-      </Button>
+      <SkeletonItem>
+        <Button icon={MessageSquare} onPress={onCommentButtonPress} size="$3">
+          {`${commentCount} Comments`}
+        </Button>
+      </SkeletonItem>
+
+      <SkeletonItem>
+        <Button icon={Gift} size="$3">
+          Awards
+        </Button>
+      </SkeletonItem>
+
+      <SkeletonItem>
+        <Button icon={Forward} size="$3">
+          Share
+        </Button>
+      </SkeletonItem>
     </XStack>
   );
 }

@@ -3,12 +3,70 @@ import { usePostListWidgetReducer } from "./PostListWidget.reducer";
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 import { match } from "ts-pattern";
 import { PostList } from "../components";
+import { Skeleton } from "../../uikits/components";
+import { Post } from "../models";
+
+const skeletonItems: Post[] = [
+  {
+    comments: [],
+    commentCount: 100,
+    voteCount: 255,
+    content: "Lorem Ipsum Dolor Sit Amet",
+    datetime: new Date().toISOString(),
+    serial: "1",
+    slug: "hokage-terbaik-sepanjang-sejarah-konoha",
+    title: "Hokage Terbaik Sepanjang Sejarah Konoha",
+    user: {
+      serial: "1",
+      name: "M. Nindra Zaka",
+      username: "mnindrazaka",
+    },
+  },
+  {
+    comments: [],
+    commentCount: 100,
+    voteCount: 255,
+    content: "Lorem Ipsum Dolor Sit Amet",
+    datetime: new Date().toISOString(),
+    serial: "2",
+    slug: "konten-terbaik-sepanjang-sejarah-konoha",
+    title: "Konten Terbaik Sepanjang Sejarah Konoha",
+    user: {
+      serial: "1",
+      name: "M. Nindra Zaka",
+      username: "mnindrazaka",
+    },
+  },
+  {
+    comments: [],
+    commentCount: 100,
+    voteCount: 255,
+    content: "Lorem Ipsum Dolor Sit Amet",
+    datetime: new Date().toISOString(),
+    serial: "3",
+    slug: "tips-dan-trick-untuk-menjadi-viral",
+    title: "Tips dan Trick untuk Menjadi Viral",
+    user: {
+      serial: "1",
+      name: "M. Nindra Zaka",
+      username: "mnindrazaka",
+    },
+  },
+];
 
 export function PostListWidget(_props: {}) {
   const [state, send] = usePostListWidgetReducer();
   return match(state)
-    .with({ type: "idle" }, () => <PostList items={[]} />)
-    .with({ type: "loading" }, () => <PostList items={[]} />)
+    .with({ type: "idle" }, () => (
+      <Skeleton isLoading>
+        <PostList items={skeletonItems} />
+      </Skeleton>
+    ))
+    .with({ type: "loading" }, () => (
+      <Skeleton isLoading>
+        <PostList items={skeletonItems} />
+      </Skeleton>
+    ))
     .with({ type: "loadingError" }, ({ errorMessage }) => (
       <>
         <AlertDialog open>
