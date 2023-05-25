@@ -49,6 +49,18 @@ const posts: Post[] = [
   },
 ];
 
+function simulateFetch<T>(callback: () => T) {
+  return new Promise<T>((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        return resolve(callback());
+      } catch (err) {
+        return reject(err);
+      }
+    }, 600);
+  });
+}
+
 type GetPostListParams = {
   page: number;
   pageSize: number;
@@ -62,19 +74,21 @@ export function getPostList({
   query,
   sortBy,
 }: GetPostListParams) {
-  const filteredPosts = posts.filter((post) => post.title.includes(query));
-  const totalItem = filteredPosts.length;
-  const totalPage = Math.ceil(totalItem / pageSize);
+  return simulateFetch(() => {
+    const filteredPosts = posts.filter((post) => post.title.includes(query));
+    const totalItem = filteredPosts.length;
+    const totalPage = Math.ceil(totalItem / pageSize);
 
-  const start = pageSize * (page - 1);
-  const end = start + pageSize;
-  const paginatedPosts = filteredPosts.slice(start, end);
+    const start = pageSize * (page - 1);
+    const end = start + pageSize;
+    const paginatedPosts = filteredPosts.slice(start, end);
 
-  return {
-    data: paginatedPosts,
-    total: totalItem,
-    hasNextPage: page < totalPage,
-  };
+    return {
+      data: paginatedPosts,
+      total: totalItem,
+      hasNextPage: page < totalPage,
+    };
+  });
 }
 
 type GetPostDetailParams = {
@@ -82,9 +96,9 @@ type GetPostDetailParams = {
 };
 
 export function getPostDetail({ slug }: GetPostDetailParams) {
-  return {
+  return simulateFetch(() => ({
     data: posts.find((post) => post.slug === slug) ?? null,
-  };
+  }));
 }
 
 type CreatePostParams = {
@@ -95,18 +109,20 @@ type CreatePostParams = {
 };
 
 export function createPost({ post }: CreatePostParams) {
-  const newPost: Post = {
-    ...post,
-    commentCount: 0,
-    voteCount: 0,
-    comments: [],
-    datetime: new Date().toISOString(),
-    serial: nanoid(),
-  };
+  return simulateFetch(() => {
+    const newPost: Post = {
+      ...post,
+      commentCount: 0,
+      voteCount: 0,
+      comments: [],
+      datetime: new Date().toISOString(),
+      serial: nanoid(),
+    };
 
-  posts.push(newPost);
+    posts.push(newPost);
 
-  return {
-    success: true,
-  };
+    return {
+      success: true,
+    };
+  });
 }
