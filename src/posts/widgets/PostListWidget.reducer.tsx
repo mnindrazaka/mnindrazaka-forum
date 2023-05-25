@@ -5,46 +5,24 @@ import { getPostList } from "../repositories";
 
 export type SortBy = "hot" | "new";
 
-type PostListWidgetState =
-  | {
-      type: "idle";
-    }
-  | {
-      type: "loading";
-      query: string;
-      sortBy: SortBy;
-    }
-  | {
-      type: "loadingError";
-      errorMessage: string;
-      query: string;
-      sortBy: SortBy;
-    }
-  | {
-      type: "main";
-      posts: Post[];
-      page: number;
-      hasNextPage: boolean;
-      query: string;
-      sortBy: SortBy;
-    }
-  | {
-      type: "loadingMore";
-      posts: Post[];
-      page: number;
-      hasNextPage: boolean;
-      query: string;
-      sortBy: SortBy;
-    }
-  | {
-      type: "loadingMoreError";
-      posts: Post[];
-      errorMessage: string;
-      page: number;
-      hasNextPage: boolean;
-      query: string;
-      sortBy: SortBy;
-    };
+type PostListWidgetContext = {
+  query: string;
+  sortBy: SortBy;
+  errorMessage: string | null;
+  posts: Post[];
+  page: number;
+  hasNextPage: boolean;
+};
+
+type PostListWidgetState = PostListWidgetContext &
+  (
+    | { type: "idle" }
+    | { type: "loading" }
+    | { type: "loadingError"; errorMessage: string }
+    | { type: "main" }
+    | { type: "loadingMore" }
+    | { type: "loadingMoreError"; errorMessage: string }
+  );
 
 type PostListWidgetAction =
   | {
@@ -97,110 +75,79 @@ const reducer = (
     [PostListWidgetState, PostListWidgetAction],
     PostListWidgetState
   >([prevState, action])
-    .with([{ type: "idle" }, { type: "fetch" }], () => ({
+    .with([{ type: "idle" }, { type: "fetch" }], ([state]) => ({
+      ...state,
       type: "loading",
-      query: "",
-      sortBy: "new",
     }))
     .with(
       [{ type: "loading" }, { type: "updateQuery" }],
-      ([state, action]) => ({
-        type: "loading",
-        query: action.query,
-        sortBy: state.sortBy,
-      })
+      ([state, action]) => ({ ...state, query: action.query })
     )
     .with(
       [{ type: "loading" }, { type: "updateSortBy" }],
-      ([state, action]) => ({
-        type: "loading",
-        query: state.query,
-        sortBy: action.sortBy,
-      })
+      ([state, action]) => ({ ...state, sortBy: action.sortBy })
     )
     .with(
       [{ type: "loading" }, { type: "fetchSuccess" }],
       ([state, action]) => ({
+        ...state,
         type: "main",
         posts: action.posts,
         page: 1,
         hasNextPage: action.hasNextPage,
-        query: state.query,
-        sortBy: state.sortBy,
       })
     )
     .with([{ type: "loading" }, { type: "fetchError" }], ([state, action]) => ({
+      ...state,
       type: "loadingError",
       errorMessage: action.errorMessage,
-      query: state.query,
-      sortBy: state.sortBy,
     }))
     .with([{ type: "loadingError" }, { type: "refetch" }], ([state]) => ({
+      ...state,
       type: "loading",
-      query: state.query,
-      sortBy: state.sortBy,
     }))
     .with([{ type: "main" }, { type: "updateQuery" }], ([state, action]) => ({
+      ...state,
       type: "loading",
       query: action.query,
-      sortBy: state.sortBy,
     }))
     .with([{ type: "main" }, { type: "updateSortBy" }], ([state, action]) => ({
+      ...state,
       type: "loading",
-      query: state.query,
       sortBy: action.sortBy,
     }))
     .with([{ type: "main" }, { type: "fetchMore" }], ([state, _]) => ({
+      ...state,
       type: "loadingMore",
-      posts: state.posts,
       page: state.page + 1,
-      hasNextPage: state.hasNextPage,
-      query: state.query,
-      sortBy: state.sortBy,
     }))
     .with(
       [{ type: "loadingMore" }, { type: "fetchMoreSuccess" }],
       ([state, action]) => ({
+        ...state,
         type: "main",
         posts: action.posts,
-        page: state.page,
         hasNextPage: action.hasNextPage,
-        query: state.query,
-        sortBy: state.sortBy,
       })
     )
     .with(
       [{ type: "loadingMore" }, { type: "fetchMoreError" }],
       ([state, action]) => ({
+        ...state,
         type: "loadingMoreError",
-        posts: state.posts,
         errorMessage: action.errorMessage,
-        page: state.page,
-        hasNextPage: state.hasNextPage,
-        query: state.query,
-        sortBy: state.sortBy,
       })
     )
     .with(
       [{ type: "loadingMoreError" }, { type: "refetchMore" }],
-      ([state]) => ({
-        type: "loadingMore",
-        posts: state.posts,
-        page: state.page,
-        hasNextPage: state.hasNextPage,
-        query: state.query,
-        sortBy: state.sortBy,
-      })
+      ([state]) => ({ ...state, type: "loadingMore" })
     )
     .with(
       [{ type: "loadingMoreError" }, { type: "fetchMoreCancel" }],
       ([state]) => ({
+        ...state,
         type: "main",
-        posts: state.posts,
         page: state.page - 1,
-        hasNextPage: state.hasNextPage,
-        query: state.query,
-        sortBy: state.sortBy,
       })
     )
     .otherwise(() => prevState);
@@ -252,7 +199,15 @@ const onStateChange = (
 };
 
 export const usePostListWidgetReducer = () => {
-  const [state, send] = React.useReducer(reducer, { type: "idle" });
+  const [state, send] = React.useReducer(reducer, {
+    type: "idle",
+    query: "",
+    sortBy: "new",
+    errorMessage: null,
+    posts: [],
+    page: 1,
+    hasNextPage: false,
+  });
 
   React.useEffect(() => {
     onStateChange(state, send);

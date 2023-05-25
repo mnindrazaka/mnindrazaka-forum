@@ -66,32 +66,6 @@ export function PostListWidget(_props: {}) {
     .with({ type: "loadingMore" }, () => true)
     .otherwise(() => false);
 
-  const query = match(state)
-    .with({ type: "idle" }, () => "")
-    .otherwise(({ query }) => query);
-
-  const sortBy = match<typeof state, SortBy>(state)
-    .with({ type: "idle" }, () => "hot")
-    .otherwise(({ sortBy }) => sortBy);
-
-  const posts = match(state)
-    .with(
-      { type: "idle" },
-      { type: "loading" },
-      { type: "loadingError" },
-      () => skeletonItems
-    )
-    .otherwise(({ posts }) => posts);
-
-  const hasNextPage = match(state)
-    .with(
-      { type: "idle" },
-      { type: "loading" },
-      { type: "loadingError" },
-      () => false
-    )
-    .otherwise(({ hasNextPage }) => hasNextPage);
-
   const isError = match(state)
     .with({ type: "loadingError" }, { type: "loadingMoreError" }, () => true)
     .otherwise(() => false);
@@ -99,14 +73,6 @@ export function PostListWidget(_props: {}) {
   const showCancelButton = match(state)
     .with({ type: "loadingMoreError" }, () => true)
     .otherwise(() => false);
-
-  const errorMessage = match(state)
-    .with(
-      { type: "loadingError" },
-      { type: "loadingMoreError" },
-      ({ errorMessage }) => errorMessage
-    )
-    .otherwise(() => "");
 
   const handleRefecth = () => {
     match(state)
@@ -119,18 +85,18 @@ export function PostListWidget(_props: {}) {
     <Skeleton isLoading={isLoading}>
       <YStack space="$3">
         <PostFilter
-          searchValue={query}
+          searchValue={state.query}
           onChangeSearchValue={(value) =>
             send({ type: "updateQuery", query: value })
           }
-          selectedSort={sortBy}
+          selectedSort={state.sortBy}
           onChangeSort={(sortBy) => send({ type: "updateSortBy", sortBy })}
         />
         <PostList
-          items={posts}
+          items={isLoading ? skeletonItems : state.posts}
           loadMore={{
             isLoading: isLoadingMore,
-            isShow: hasNextPage,
+            isShow: state.hasNextPage,
             onPress: () => send({ type: "fetchMore" }),
           }}
         />
@@ -140,7 +106,7 @@ export function PostListWidget(_props: {}) {
             <AlertDialog.Content>
               <YStack space="$3">
                 <H3>Something Went Wrong</H3>
-                <Paragraph>{errorMessage}</Paragraph>
+                <Paragraph>{state.errorMessage}</Paragraph>
                 <XStack space="$3">
                   <Button onPress={handleRefecth}>Retry</Button>
                   {showCancelButton && (
