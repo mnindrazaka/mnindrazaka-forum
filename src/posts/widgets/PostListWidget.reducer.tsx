@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import { Post } from "../models";
 import { getPostList } from "../repositories";
 
-type SortBy = "hot" | "new";
+export type SortBy = "hot" | "new";
 
 type PostListWidgetState =
   | {
