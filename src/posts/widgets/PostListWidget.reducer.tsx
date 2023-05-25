@@ -145,23 +145,36 @@ const onStateChange = (
     .with({ type: "idle" }, () => {
       send({ type: "fetch" });
     })
-    .with({ type: "loading" }, async () => {
-      const { posts, hasNextPage } = await getPostList({
+    .with({ type: "loading" }, () => {
+      getPostList({
         page: 1,
         pageSize: 1,
-      });
-      send({ type: "fetchSuccess", posts, hasNextPage });
+      })
+        .then(({ posts, hasNextPage }) =>
+          send({ type: "fetchSuccess", posts, hasNextPage })
+        )
+        .catch((err) =>
+          send({ type: "fetchError", errorMessage: err.message })
+        );
     })
     .with({ type: "loadingMore" }, async (state) => {
-      const { posts, hasNextPage } = await getPostList({
+      getPostList({
         page: state.page,
         pageSize: 1,
-      });
-      send({
-        type: "fetchMoreSuccess",
-        posts: [...state.posts, ...posts],
-        hasNextPage,
-      });
+      })
+        .then(({ posts, hasNextPage }) =>
+          send({
+            type: "fetchMoreSuccess",
+            posts: [...state.posts, ...posts],
+            hasNextPage,
+          })
+        )
+        .catch((err) =>
+          send({
+            type: "fetchMoreError",
+            errorMessage: err.message,
+          })
+        );
     })
     .otherwise(() => {});
 };

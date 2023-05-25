@@ -83,6 +83,10 @@ export function getPostList({
     const end = start + pageSize;
     const paginatedPosts = filteredPosts.slice(start, end);
 
+    if (page !== 1) {
+      throw new Error("Server is down due to overload");
+    }
+
     return {
       data: paginatedPosts,
       total: totalItem,

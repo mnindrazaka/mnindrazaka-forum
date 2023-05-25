@@ -1,4 +1,3 @@
-import { Post } from "./models";
 import * as fakers from "../fakers";
 
 type GetPostListParams = {

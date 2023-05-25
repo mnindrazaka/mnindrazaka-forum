@@ -18,7 +18,6 @@ export type PostListProps = {
     isShow: boolean;
     isLoading: boolean;
     onPress: () => void;
-    title: string;
   };
 } & XStackProps;
 
@@ -48,7 +47,7 @@ export function PostList({
             icon={loadMore.isLoading ? <Spinner /> : null}
             onPress={loadMore.onPress}
           >
-            {loadMore.title}
+            Load More
           </Button>
         </XStack>
       )}
