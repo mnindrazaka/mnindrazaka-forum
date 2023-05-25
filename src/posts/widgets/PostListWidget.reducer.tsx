@@ -7,11 +7,9 @@ import {
   updateQueryURL,
 } from "../repositories";
 
-export type SortBy = "hot" | "new";
-
 type PostListWidgetContext = {
   query: string;
-  sortBy: SortBy;
+  sortBy: GetPostListParams["sortBy"];
   errorMessage: string | null;
   posts: Post[];
   page: number;
@@ -38,7 +36,7 @@ type PostListWidgetAction =
     }
   | {
       type: "updateSortBy";
-      sortBy: SortBy;
+      sortBy: GetPostListParams["sortBy"];
     }
   | {
       type: "fetchSuccess";
@@ -184,6 +182,7 @@ const onStateChange = (
       getPostList({
         page: state.page,
         pageSize: 1,
+        query: state.query,
         sortBy: state.sortBy,
       })
         .then(({ posts, hasNextPage }) =>
@@ -204,7 +203,7 @@ const onStateChange = (
 };
 
 export const getPostListWidgetInitialState = async (
-  params: Required<GetPostListParams>
+  params: GetPostListParams
 ): Promise<PostListWidgetState | undefined> => {
   try {
     const { posts, hasNextPage } = await getPostList(params);

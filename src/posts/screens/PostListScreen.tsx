@@ -4,7 +4,6 @@ import { PostListWidget } from "../widgets";
 import { Container } from "../../uikits/components";
 import {
   PostListWidgetState,
-  SortBy,
   getPostListWidgetInitialState,
 } from "../widgets/PostListWidget.reducer";
 

@@ -1,7 +1,7 @@
 import { Post } from "@/posts/models";
 import { nanoid } from "nanoid";
 
-const posts: Post[] = [
+export const posts: Post[] = [
   {
     comments: [],
     commentCount: 100,

@@ -15,56 +15,8 @@ import {
 import { match } from "ts-pattern";
 import { PostFilter } from "../components";
 import { Skeleton } from "../../uikits/components";
-import { Post } from "../models";
 import { PostCardWidget } from "./PostCardWidget";
-
-const skeletonItems: Post[] = [
-  {
-    comments: [],
-    commentCount: 100,
-    voteCount: 255,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
-    serial: "1",
-    slug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    title: "Hokage Terbaik Sepanjang Sejarah Konoha",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
-  },
-  {
-    comments: [],
-    commentCount: 100,
-    voteCount: 255,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
-    serial: "2",
-    slug: "konten-terbaik-sepanjang-sejarah-konoha",
-    title: "Konten Terbaik Sepanjang Sejarah Konoha",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
-  },
-  {
-    comments: [],
-    commentCount: 100,
-    voteCount: 255,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
-    serial: "3",
-    slug: "tips-dan-trick-untuk-menjadi-viral",
-    title: "Tips dan Trick untuk Menjadi Viral",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
-  },
-];
+import * as fakers from "../../fakers";
 
 export type PostListWidgetProps = {
   initialState?: PostListWidgetState;
@@ -96,7 +48,7 @@ export function PostListWidget(props: PostListWidgetProps) {
       .otherwise(() => {});
   };
 
-  const posts = isLoading ? skeletonItems : state.posts;
+  const posts = isLoading ? fakers.posts : state.posts;
 
   return (
     <Skeleton isLoading={isLoading}>

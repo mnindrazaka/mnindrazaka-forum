@@ -68,17 +68,17 @@ const onStateChange = (
 
 type UsePostCardWidgetReducerParams = {
   slug: string;
-  vote: number;
+  voteCount: number;
 };
 
 export const usePostCardWidgetReducer = ({
   slug,
-  vote,
+  voteCount,
 }: UsePostCardWidgetReducerParams) => {
   const [state, send] = React.useReducer(reducer, {
     type: "main",
     voteChangeAmount: 0,
-    voteCount: vote,
+    voteCount,
     slug,
   });
 

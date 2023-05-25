@@ -11,11 +11,12 @@ export type PostCardWidgetProps = {
   onCommentButtonPress?: () => void;
 };
 
-export function PostCardWidget(props: PostCardWidgetProps) {
-  const [state, send] = usePostCardWidgetReducer({
-    slug: props.slug,
-    vote: props.voteCount,
-  });
+export function PostCardWidget({
+  slug,
+  voteCount,
+  ...props
+}: PostCardWidgetProps) {
+  const [state, send] = usePostCardWidgetReducer({ slug, voteCount });
   return (
     <PostCard
       {...props}

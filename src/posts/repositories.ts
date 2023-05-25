@@ -1,17 +1,19 @@
 import * as fakers from "../fakers";
 
+type SortBy = "hot" | "new";
+
 export type GetPostListParams = {
-  page?: number;
-  pageSize?: number;
-  query?: string;
-  sortBy?: "hot" | "new";
+  page: number;
+  pageSize: number;
+  query: string;
+  sortBy: SortBy;
 };
 
 export async function getPostList({
-  page = 1,
-  pageSize = 20,
-  query = "",
-  sortBy = "new",
+  page,
+  pageSize,
+  query,
+  sortBy,
 }: GetPostListParams) {
   const { data, hasNextPage } = await fakers.getPostList({
     page,
@@ -31,10 +33,12 @@ export function votePost({ slug, amount }: VotePostParams) {
   return fakers.votePost({ slug, amount });
 }
 
-export function updateQueryURL(params: {
+type UpdateQueryURLParams = {
   query: string;
-  sortBy: "hot" | "new";
-}) {
+  sortBy: SortBy;
+};
+
+export function updateQueryURL(params: UpdateQueryURLParams) {
   const url = new URL(window.location.href);
   url.searchParams.set("query", params.query);
   url.searchParams.set("sortBy", params.sortBy);
