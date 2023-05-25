@@ -108,14 +108,16 @@ export function PostListWidget(_props: {}) {
           ))}
         </YStack>
 
-        <XStack>
-          <Button
-            icon={isLoadingMore ? <Spinner /> : null}
-            onPress={() => send({ type: "fetchMore" })}
-          >
-            Load More
-          </Button>
-        </XStack>
+        {state.hasNextPage && (
+          <XStack>
+            <Button
+              icon={isLoadingMore ? <Spinner /> : null}
+              onPress={() => send({ type: "fetchMore" })}
+            >
+              Load More
+            </Button>
+          </XStack>
+        )}
 
         <AlertDialog open={isError}>
           <AlertDialog.Portal>
