@@ -15,7 +15,7 @@ export type PostListScreenProps = {
 type GetPostListScreenPropsParams = {
   page: number;
   query: string;
-  sortBy: SortBy;
+  sortBy: string;
 };
 
 export async function getPostListScreenProps({
@@ -27,7 +27,7 @@ export async function getPostListScreenProps({
     page,
     pageSize: 1,
     query,
-    sortBy,
+    sortBy: sortBy !== "hot" && sortBy !== "new" ? "new" : sortBy,
   });
   return { postListWidgetInitialState };
 }
