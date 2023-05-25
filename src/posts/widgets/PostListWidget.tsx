@@ -71,12 +71,13 @@ export function PostListWidget(_props: {}) {
           onChangeSearchValue={(value) =>
             send({ type: "updateQuery", query: value })
           }
-          selectedSort="new"
+          selectedSort={state.sortBy}
+          onChangeSort={(sortBy) => send({ type: "updateSortBy", sortBy })}
         />
         <PostList items={skeletonItems} />
       </Skeleton>
     ))
-    .with({ type: "loadingError" }, ({ errorMessage, query }) => (
+    .with({ type: "loadingError" }, ({ errorMessage, query, sortBy }) => (
       <>
         <AlertDialog open>
           <AlertDialog.Portal>
@@ -90,7 +91,7 @@ export function PostListWidget(_props: {}) {
             </AlertDialog.Content>
           </AlertDialog.Portal>
         </AlertDialog>
-        <PostFilter searchValue={query} selectedSort="new" />
+        <PostFilter searchValue={query} selectedSort={sortBy} />
         <PostList
           items={[]}
           loadMore={{
@@ -101,14 +102,15 @@ export function PostListWidget(_props: {}) {
         />
       </>
     ))
-    .with({ type: "main" }, ({ posts, hasNextPage, query }) => (
+    .with({ type: "main" }, ({ posts, hasNextPage, query, sortBy }) => (
       <>
         <PostFilter
           searchValue={query}
           onChangeSearchValue={(value) =>
             send({ type: "updateQuery", query: value })
           }
-          selectedSort="new"
+          selectedSort={sortBy}
+          onChangeSort={(sortBy) => send({ type: "updateSortBy", sortBy })}
         />
         <PostList
           items={posts}
@@ -120,9 +122,9 @@ export function PostListWidget(_props: {}) {
         />
       </>
     ))
-    .with({ type: "loadingMore" }, ({ posts, hasNextPage, query }) => (
+    .with({ type: "loadingMore" }, ({ posts, hasNextPage, query, sortBy }) => (
       <>
-        <PostFilter searchValue={query} selectedSort="new" />
+        <PostFilter searchValue={query} selectedSort={sortBy} />
         <PostList
           items={posts}
           loadMore={{
@@ -135,7 +137,7 @@ export function PostListWidget(_props: {}) {
     ))
     .with(
       { type: "loadingMoreError" },
-      ({ posts, hasNextPage, errorMessage, query }) => (
+      ({ posts, hasNextPage, errorMessage, query, sortBy }) => (
         <>
           <AlertDialog open>
             <AlertDialog.Portal>
@@ -156,7 +158,7 @@ export function PostListWidget(_props: {}) {
               </AlertDialog.Content>
             </AlertDialog.Portal>
           </AlertDialog>
-          <PostFilter searchValue={query} selectedSort="new" />
+          <PostFilter searchValue={query} selectedSort={sortBy} />
           <PostList
             items={posts}
             loadMore={{

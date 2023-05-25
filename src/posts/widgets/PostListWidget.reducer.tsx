@@ -3,6 +3,8 @@ import { match } from "ts-pattern";
 import { Post } from "../models";
 import { getPostList } from "../repositories";
 
+type SortBy = "hot" | "new";
+
 type PostListWidgetState =
   | {
       type: "idle";
@@ -10,11 +12,13 @@ type PostListWidgetState =
   | {
       type: "loading";
       query: string;
+      sortBy: SortBy;
     }
   | {
       type: "loadingError";
       errorMessage: string;
       query: string;
+      sortBy: SortBy;
     }
   | {
       type: "main";
@@ -22,6 +26,7 @@ type PostListWidgetState =
       page: number;
       hasNextPage: boolean;
       query: string;
+      sortBy: SortBy;
     }
   | {
       type: "loadingMore";
@@ -29,6 +34,7 @@ type PostListWidgetState =
       page: number;
       hasNextPage: boolean;
       query: string;
+      sortBy: SortBy;
     }
   | {
       type: "loadingMoreError";
@@ -37,6 +43,7 @@ type PostListWidgetState =
       page: number;
       hasNextPage: boolean;
       query: string;
+      sortBy: SortBy;
     };
 
 type PostListWidgetAction =
@@ -46,6 +53,10 @@ type PostListWidgetAction =
   | {
       type: "updateQuery";
       query: string;
+    }
+  | {
+      type: "updateSortBy";
+      sortBy: SortBy;
     }
   | {
       type: "fetchSuccess";
@@ -89,11 +100,24 @@ const reducer = (
     .with([{ type: "idle" }, { type: "fetch" }], () => ({
       type: "loading",
       query: "",
+      sortBy: "new",
     }))
-    .with([{ type: "loading" }, { type: "updateQuery" }], ([_, action]) => ({
-      type: "loading",
-      query: action.query,
-    }))
+    .with(
+      [{ type: "loading" }, { type: "updateQuery" }],
+      ([state, action]) => ({
+        type: "loading",
+        query: action.query,
+        sortBy: state.sortBy,
+      })
+    )
+    .with(
+      [{ type: "loading" }, { type: "updateSortBy" }],
+      ([state, action]) => ({
+        type: "loading",
+        query: state.query,
+        sortBy: action.sortBy,
+      })
+    )
     .with(
       [{ type: "loading" }, { type: "fetchSuccess" }],
       ([state, action]) => ({
@@ -102,20 +126,29 @@ const reducer = (
         page: 1,
         hasNextPage: action.hasNextPage,
         query: state.query,
+        sortBy: state.sortBy,
       })
     )
     .with([{ type: "loading" }, { type: "fetchError" }], ([state, action]) => ({
       type: "loadingError",
       errorMessage: action.errorMessage,
       query: state.query,
+      sortBy: state.sortBy,
     }))
     .with([{ type: "loadingError" }, { type: "refetch" }], ([state]) => ({
       type: "loading",
       query: state.query,
+      sortBy: state.sortBy,
     }))
-    .with([{ type: "main" }, { type: "updateQuery" }], ([_, action]) => ({
+    .with([{ type: "main" }, { type: "updateQuery" }], ([state, action]) => ({
       type: "loading",
       query: action.query,
+      sortBy: state.sortBy,
+    }))
+    .with([{ type: "main" }, { type: "updateSortBy" }], ([state, action]) => ({
+      type: "loading",
+      query: state.query,
+      sortBy: action.sortBy,
     }))
     .with([{ type: "main" }, { type: "fetchMore" }], ([state, _]) => ({
       type: "loadingMore",
@@ -123,6 +156,7 @@ const reducer = (
       page: state.page + 1,
       hasNextPage: state.hasNextPage,
       query: state.query,
+      sortBy: state.sortBy,
     }))
     .with(
       [{ type: "loadingMore" }, { type: "fetchMoreSuccess" }],
@@ -132,6 +166,7 @@ const reducer = (
         page: state.page,
         hasNextPage: action.hasNextPage,
         query: state.query,
+        sortBy: state.sortBy,
       })
     )
     .with(
@@ -143,6 +178,7 @@ const reducer = (
         page: state.page,
         hasNextPage: state.hasNextPage,
         query: state.query,
+        sortBy: state.sortBy,
       })
     )
     .with(
@@ -153,6 +189,7 @@ const reducer = (
         page: state.page,
         hasNextPage: state.hasNextPage,
         query: state.query,
+        sortBy: state.sortBy,
       })
     )
     .with(
@@ -163,6 +200,7 @@ const reducer = (
         page: state.page - 1,
         hasNextPage: state.hasNextPage,
         query: state.query,
+        sortBy: state.sortBy,
       })
     )
     .otherwise(() => prevState);
@@ -181,6 +219,7 @@ const onStateChange = (
         page: 1,
         pageSize: 1,
         query: state.query,
+        sortBy: state.sortBy,
       })
         .then(({ posts, hasNextPage }) =>
           send({ type: "fetchSuccess", posts, hasNextPage })
@@ -193,6 +232,7 @@ const onStateChange = (
       getPostList({
         page: state.page,
         pageSize: 1,
+        sortBy: state.sortBy,
       })
         .then(({ posts, hasNextPage }) =>
           send({

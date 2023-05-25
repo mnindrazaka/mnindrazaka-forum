@@ -5,9 +5,9 @@ const posts: Post[] = [
   {
     comments: [],
     commentCount: 100,
-    voteCount: 255,
+    voteCount: 500,
     content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
+    datetime: new Date("May 25, 2023 12:00:00").toISOString(),
     serial: "1",
     slug: "hokage-terbaik-sepanjang-sejarah-konoha",
     title: "Hokage Terbaik Sepanjang Sejarah Konoha",
@@ -20,9 +20,9 @@ const posts: Post[] = [
   {
     comments: [],
     commentCount: 100,
-    voteCount: 255,
+    voteCount: 1000,
     content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
+    datetime: new Date("May 23, 2023 12:00:00").toISOString(),
     serial: "2",
     slug: "konten-terbaik-sepanjang-sejarah-konoha",
     title: "Konten Terbaik Sepanjang Sejarah Konoha",
@@ -37,7 +37,7 @@ const posts: Post[] = [
     commentCount: 100,
     voteCount: 255,
     content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date().toISOString(),
+    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
     serial: "3",
     slug: "tips-dan-trick-untuk-menjadi-viral",
     title: "Tips dan Trick untuk Menjadi Viral",
@@ -78,12 +78,17 @@ export function getPostList({
     const filteredPosts = posts.filter((post) =>
       post.title.toLowerCase().includes(query)
     );
-    const totalItem = filteredPosts.length;
+    const sortedPosts = filteredPosts.sort((prev, next) =>
+      sortBy === "new"
+        ? new Date(next.datetime).getTime() - new Date(prev.datetime).getTime()
+        : next.voteCount - prev.voteCount
+    );
+    const totalItem = sortedPosts.length;
     const totalPage = Math.ceil(totalItem / pageSize);
 
     const start = pageSize * (page - 1);
     const end = start + pageSize;
-    const paginatedPosts = filteredPosts.slice(start, end);
+    const paginatedPosts = sortedPosts.slice(start, end);
 
     return {
       data: paginatedPosts,
