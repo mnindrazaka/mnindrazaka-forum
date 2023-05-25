@@ -205,7 +205,7 @@ const onStateChange = (
 
 export const getPostListWidgetInitialState = async (
   params: Required<GetPostListParams>
-): Promise<PostListWidgetState> => {
+): Promise<PostListWidgetState | undefined> => {
   try {
     const { posts, hasNextPage } = await getPostList(params);
     return {
@@ -216,15 +216,7 @@ export const getPostListWidgetInitialState = async (
       errorMessage: null,
     };
   } catch {
-    return {
-      type: "idle",
-      errorMessage: null,
-      hasNextPage: false,
-      page: 1,
-      posts: [],
-      query: "",
-      sortBy: "new",
-    };
+    return undefined;
   }
 };
 
