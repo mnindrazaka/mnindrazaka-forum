@@ -1,5 +1,8 @@
 import React from "react";
-import { usePostListWidgetReducer } from "./PostListWidget.reducer";
+import {
+  PostListWidgetState,
+  usePostListWidgetReducer,
+} from "./PostListWidget.reducer";
 import {
   AlertDialog,
   Button,
@@ -63,8 +66,12 @@ const skeletonItems: Post[] = [
   },
 ];
 
-export function PostListWidget(_props: {}) {
-  const [state, send] = usePostListWidgetReducer();
+export type PostListWidgetProps = {
+  initialState?: PostListWidgetState;
+};
+
+export function PostListWidget(props: PostListWidgetProps) {
+  const [state, send] = usePostListWidgetReducer(props.initialState);
 
   const isLoading = match(state)
     .with({ type: "idle" }, { type: "loading" }, () => true)

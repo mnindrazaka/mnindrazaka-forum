@@ -1,7 +1,7 @@
 import React from "react";
 import { match } from "ts-pattern";
 import { Post } from "../models";
-import { getPostList } from "../repositories";
+import { GetPostListParams, getPostList } from "../repositories";
 
 export type SortBy = "hot" | "new";
 
@@ -14,7 +14,7 @@ type PostListWidgetContext = {
   hasNextPage: boolean;
 };
 
-type PostListWidgetState = PostListWidgetContext &
+export type PostListWidgetState = PostListWidgetContext &
   (
     | { type: "idle" }
     | { type: "loading" }
@@ -198,16 +198,46 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-export const usePostListWidgetReducer = () => {
-  const [state, send] = React.useReducer(reducer, {
-    type: "idle",
-    query: "",
-    sortBy: "new",
-    errorMessage: null,
-    posts: [],
-    page: 1,
-    hasNextPage: false,
-  });
+export const getPostListWidgetInitialState = async (
+  params: Required<GetPostListParams>
+): Promise<PostListWidgetState> => {
+  try {
+    const { posts, hasNextPage } = await getPostList(params);
+    return {
+      ...params,
+      type: "main",
+      posts,
+      hasNextPage,
+      errorMessage: null,
+    };
+  } catch {
+    return {
+      type: "idle",
+      errorMessage: null,
+      hasNextPage: false,
+      page: 1,
+      posts: [],
+      query: "",
+      sortBy: "new",
+    };
+  }
+};
+
+export const usePostListWidgetReducer = (
+  initialState?: PostListWidgetState
+) => {
+  const [state, send] = React.useReducer(
+    reducer,
+    initialState ?? {
+      type: "idle",
+      query: "",
+      sortBy: "new",
+      errorMessage: null,
+      posts: [],
+      page: 1,
+      hasNextPage: false,
+    }
+  );
 
   React.useEffect(() => {
     onStateChange(state, send);

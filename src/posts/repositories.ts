@@ -1,6 +1,6 @@
 import * as fakers from "../fakers";
 
-type GetPostListParams = {
+export type GetPostListParams = {
   page?: number;
   pageSize?: number;
   query?: string;

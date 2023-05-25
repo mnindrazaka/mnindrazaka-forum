@@ -2,16 +2,45 @@ import React from "react";
 import { H2, ScrollView, YStack } from "tamagui";
 import { PostListWidget } from "../widgets";
 import { Container } from "../../uikits/components";
+import {
+  PostListWidgetState,
+  SortBy,
+  getPostListWidgetInitialState,
+} from "../widgets/PostListWidget.reducer";
 
-export type PostListScreenProps = {};
+export type PostListScreenProps = {
+  postListWidgetInitialState?: PostListWidgetState;
+};
 
-export function PostListScreen(_props: PostListScreenProps) {
+type GetPostListScreenPropsParams = {
+  page: number;
+  query: string;
+  sortBy: SortBy;
+};
+
+export async function getPostListScreenProps({
+  page,
+  query,
+  sortBy,
+}: GetPostListScreenPropsParams): Promise<PostListScreenProps> {
+  const postListWidgetInitialState = await getPostListWidgetInitialState({
+    page,
+    pageSize: 1,
+    query,
+    sortBy,
+  });
+  return { postListWidgetInitialState };
+}
+
+export function PostListScreen({
+  postListWidgetInitialState,
+}: PostListScreenProps) {
   return (
     <Container>
       <YStack space="$3">
         <H2>Post List</H2>
         <ScrollView>
-          <PostListWidget />
+          <PostListWidget initialState={postListWidgetInitialState} />
         </ScrollView>
       </YStack>
     </Container>
