@@ -1,11 +1,18 @@
 import React from "react";
-import { SortBy, usePostListWidgetReducer } from "./PostListWidget.reducer";
-import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
+import { usePostListWidgetReducer } from "./PostListWidget.reducer";
+import {
+  AlertDialog,
+  Button,
+  H3,
+  Paragraph,
+  Spinner,
+  XStack,
+  YStack,
+} from "tamagui";
 import { match } from "ts-pattern";
-import { PostList } from "../components";
+import { PostCard, PostFilter } from "../components";
 import { Skeleton } from "../../uikits/components";
 import { Post } from "../models";
-import { PostFilter } from "../components/PostFilter";
 
 const skeletonItems: Post[] = [
   {
@@ -81,6 +88,8 @@ export function PostListWidget(_props: {}) {
       .otherwise(() => {});
   };
 
+  const posts = isLoading ? skeletonItems : state.posts;
+
   return (
     <Skeleton isLoading={isLoading}>
       <YStack space="$3">
@@ -92,14 +101,21 @@ export function PostListWidget(_props: {}) {
           selectedSort={state.sortBy}
           onChangeSort={(sortBy) => send({ type: "updateSortBy", sortBy })}
         />
-        <PostList
-          items={isLoading ? skeletonItems : state.posts}
-          loadMore={{
-            isLoading: isLoadingMore,
-            isShow: state.hasNextPage,
-            onPress: () => send({ type: "fetchMore" }),
-          }}
-        />
+        <YStack space="$3">
+          {posts.map((post) => (
+            <PostCard key={post.serial} {...post} />
+          ))}
+        </YStack>
+
+        <XStack>
+          <Button
+            icon={isLoadingMore ? <Spinner /> : null}
+            onPress={() => send({ type: "fetchMore" })}
+          >
+            Load More
+          </Button>
+        </XStack>
+
         <AlertDialog open={isError}>
           <AlertDialog.Portal>
             <AlertDialog.Overlay />
