@@ -137,3 +137,24 @@ export function createPost({ post }: CreatePostParams) {
     };
   });
 }
+
+type VotePostParams = {
+  slug: string;
+  amount: number;
+};
+
+export function votePost({ amount, slug }: VotePostParams) {
+  return simulateFetch(() => {
+    const index = posts.findIndex((post) => post.slug === slug);
+    if (index === -1) throw new Error("Post slug is not found");
+
+    posts[index] = {
+      ...posts[index],
+      voteCount: posts[index].voteCount + amount,
+    };
+
+    return {
+      success: true,
+    };
+  });
+}

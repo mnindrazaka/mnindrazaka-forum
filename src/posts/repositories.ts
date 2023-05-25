@@ -21,3 +21,12 @@ export async function getPostList({
   });
   return { posts: data, hasNextPage };
 }
+
+type VotePostParams = {
+  slug: string;
+  amount: number;
+};
+
+export function votePost({ slug, amount }: VotePostParams) {
+  return fakers.votePost({ slug, amount });
+}
