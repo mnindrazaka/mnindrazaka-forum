@@ -6,21 +6,20 @@ import { Button, Input, Label, Spinner, XStack, YStack } from "tamagui";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
-type PostFormValues = {
+export type PostFormProps = {
   title: string;
   content: string;
-};
-
-export type PostFormProps = {
-  values: PostFormValues;
-  onChange?: (values: PostFormValues) => void;
+  onChangeTitle?: (value: string) => void;
+  onChangeContent?: (value: string) => void;
   onSubmit?: () => void;
   isSubmitting?: boolean;
 };
 
 export function PostForm({
-  values,
-  onChange,
+  title,
+  content,
+  onChangeTitle,
+  onChangeContent,
   onSubmit,
   isSubmitting,
 }: PostFormProps) {
@@ -31,21 +30,15 @@ export function PostForm({
         <Input
           id="title"
           placeholder="Enter post title"
-          value={values.title}
-          onChangeText={
-            onChange
-              ? (value) => onChange({ ...values, title: value })
-              : undefined
-          }
+          value={title}
+          onChangeText={onChangeTitle}
         />
       </YStack>
 
       <MDEditor
-        value={values.content}
+        value={content}
         onChange={
-          onChange
-            ? (value) => onChange({ ...values, content: value ?? "" })
-            : undefined
+          onChangeContent ? (value) => onChangeContent(value ?? "") : undefined
         }
       />
 

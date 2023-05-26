@@ -24,6 +24,32 @@ export async function getPostList({
   return { posts: data, hasNextPage };
 }
 
+export type CreatePosParams = {
+  title: string;
+  content: string;
+};
+
+export async function createPost({ title, content }: CreatePosParams) {
+  const slug = title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const { success } = await fakers.createPost({
+    post: {
+      title,
+      slug,
+      content,
+      // TODO: change this based on authenticated user
+      user: { name: "anonymous", serial: "1", username: "anonymous" },
+    },
+  });
+
+  return { success };
+}
+
 type VotePostParams = {
   slug: string;
   amount: number;

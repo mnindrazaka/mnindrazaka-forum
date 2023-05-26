@@ -9,17 +9,13 @@ const Template: StoryFn<typeof PostForm> = (args) => <PostForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  values: {
-    title: "",
-    content: "",
-  },
+  title: "",
+  content: "",
 };
 
 export const IsSubmitting = Template.bind({});
 IsSubmitting.args = {
-  values: {
-    title: "",
-    content: "",
-  },
+  title: "",
+  content: "",
   isSubmitting: true,
 };
