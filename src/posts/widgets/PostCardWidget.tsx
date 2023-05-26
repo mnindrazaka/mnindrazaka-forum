@@ -1,6 +1,7 @@
 import React from "react";
 import { PostCard } from "../components";
 import { usePostCardWidgetReducer } from "./PostCardWidget.reducer";
+import { XStackProps } from "tamagui";
 
 export type PostCardWidgetProps = {
   slug: string;
@@ -10,7 +11,7 @@ export type PostCardWidgetProps = {
   datetime: string;
   commentCount: number;
   onCommentButtonPress?: () => void;
-};
+} & XStackProps;
 
 export function PostCardWidget({
   slug,

@@ -17,13 +17,18 @@ import { PostFilter } from "../components";
 import { Skeleton } from "../../uikits/components";
 import { PostCardWidget } from "./PostCardWidget";
 import * as fakers from "../../fakers";
+import { Post } from "../models";
 
 export type PostListWidgetProps = {
   initialState?: PostListWidgetState | null;
+  onPostCardPress?: (post: Post) => void;
 };
 
-export function PostListWidget(props: PostListWidgetProps) {
-  const [state, send] = usePostListWidgetReducer(props.initialState);
+export function PostListWidget({
+  initialState,
+  onPostCardPress,
+}: PostListWidgetProps) {
+  const [state, send] = usePostListWidgetReducer(initialState);
 
   const isLoading = match(state)
     .with({ type: "idle" }, { type: "loading" }, () => true)
@@ -63,7 +68,15 @@ export function PostListWidget(props: PostListWidgetProps) {
         />
         <YStack space="$3">
           {posts.map((post) => (
-            <PostCardWidget key={post.serial} {...post} content={undefined} />
+            <PostCardWidget
+              key={post.serial}
+              {...post}
+              content={undefined}
+              cursor="pointer"
+              onPress={
+                onPostCardPress ? () => onPostCardPress(post) : undefined
+              }
+            />
           ))}
         </YStack>
 

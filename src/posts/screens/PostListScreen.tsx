@@ -7,6 +7,7 @@ import {
   getPostListWidgetInitialState,
 } from "../widgets/PostListWidget.reducer";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export type PostListScreenProps = {
   postListWidgetInitialState: PostListWidgetState | null;
@@ -35,6 +36,7 @@ export async function getPostListScreenProps({
 export function PostListScreen({
   postListWidgetInitialState,
 }: PostListScreenProps) {
+  const router = useRouter();
   return (
     <Container paddingVertical="$3">
       <YStack space="$3">
@@ -45,7 +47,10 @@ export function PostListScreen({
           </Link>
         </XStack>
         <ScrollView>
-          <PostListWidget initialState={postListWidgetInitialState} />
+          <PostListWidget
+            initialState={postListWidgetInitialState}
+            onPostCardPress={(post) => router.push(`/posts/${post.slug}`)}
+          />
         </ScrollView>
       </YStack>
     </Container>
