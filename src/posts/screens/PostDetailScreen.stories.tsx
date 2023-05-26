@@ -11,5 +11,5 @@ const Template: StoryFn<typeof PostDetailScreen> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  slug: "tips-dan-trick-untuk-menjadi-viral",
+  slug: "hokage-terbaik-sepanjang-sejarah-konoha",
 };
