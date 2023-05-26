@@ -8,6 +8,7 @@ import { match } from "ts-pattern";
 import { Skeleton } from "../../uikits/components";
 import { CommentCardWidget } from "./CommentCardWidget";
 import * as fakers from "../../fakers";
+import { CommentFormWidget } from "./CommentFormWidget";
 
 export type CommentListWidgetProps = {
   postSlug: string;
@@ -29,6 +30,11 @@ export function CommentListWidget({
   return (
     <Skeleton isLoading={isLoading}>
       <YStack space="$3">
+        <CommentFormWidget
+          postSlug={postSlug}
+          onSubmitSuccess={() => send({ type: "refetch" })}
+        />
+
         <YStack space="$3">
           {comments.map((comment) => (
             <CommentCardWidget key={comment.serial} {...comment} />

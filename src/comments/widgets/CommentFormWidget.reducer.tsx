@@ -1,17 +1,17 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { createPost } from "../repositories";
+import { createComment } from "../repositories";
 
-type PostFormWidgetContext = {
-  title: string;
+type CommentFormWidgetContext = {
+  postSlug: string;
   content: string;
   errorMessage: string | null;
 };
 
-export type PostFormWidgetState = PostFormWidgetContext &
+export type CommentFormWidgetState = CommentFormWidgetContext &
   ({ type: "main" } | { type: "submitting" } | { type: "submittingError" });
 
-export type PostFormWidgetAction =
+export type CommentFormWidgetAction =
   | { type: "updateTitle"; title: string }
   | { type: "updateContent"; content: string }
   | { type: "submit" }
@@ -21,17 +21,13 @@ export type PostFormWidgetAction =
   | { type: "cancelSubmit" };
 
 const reducer = (
-  prevState: PostFormWidgetState,
-  action: PostFormWidgetAction
-): PostFormWidgetState => {
+  prevState: CommentFormWidgetState,
+  action: CommentFormWidgetAction
+): CommentFormWidgetState => {
   return match<
-    [PostFormWidgetState, PostFormWidgetAction],
-    PostFormWidgetState
+    [CommentFormWidgetState, CommentFormWidgetAction],
+    CommentFormWidgetState
   >([prevState, action])
-    .with([{ type: "main" }, { type: "updateTitle" }], ([state, action]) => ({
-      ...state,
-      title: action.title,
-    }))
     .with([{ type: "main" }, { type: "updateContent" }], ([state, action]) => ({
       ...state,
       content: action.content,
@@ -43,7 +39,6 @@ const reducer = (
     .with([{ type: "submitting" }, { type: "submitSuccess" }], ([state]) => ({
       ...state,
       type: "main",
-      title: "",
       content: "",
     }))
     .with(
@@ -75,13 +70,13 @@ type OnStateChangeConfig = {
 };
 
 const onStateChange = (
-  nextState: PostFormWidgetState,
-  send: (action: PostFormWidgetAction) => void,
+  nextState: CommentFormWidgetState,
+  send: (action: CommentFormWidgetAction) => void,
   config: OnStateChangeConfig
 ) => {
   match(nextState)
     .with({ type: "submitting" }, (state) => {
-      createPost({ title: state.title, content: state.content })
+      createComment({ content: state.content, postSlug: state.postSlug })
         .then(() => {
           send({ type: "submitSuccess" });
           if (config.onSubmitSuccess) config.onSubmitSuccess();
@@ -93,18 +88,19 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-type UsePostFormWidgetReducerParams = {
+type UseCommentFormWidgetReducerParams = {
   onSubmitSuccess?: () => void;
+  postSlug: string;
 };
 
-export const usePostFormWidgetReducer = (
-  params: UsePostFormWidgetReducerParams
+export const useCommentFormWidgetReducer = (
+  params: UseCommentFormWidgetReducerParams
 ) => {
   const [state, send] = React.useReducer(reducer, {
     type: "main",
-    title: "",
     content: "",
     errorMessage: null,
+    postSlug: params.postSlug,
   });
 
   React.useEffect(() => {

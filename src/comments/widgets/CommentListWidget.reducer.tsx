@@ -62,6 +62,10 @@ const reducer = (
       ...state,
       type: "loading",
     }))
+    .with([{ type: "main" }, { type: "refetch" }], ([state]) => ({
+      ...state,
+      type: "loading",
+    }))
     .otherwise(() => prevState);
 };
 
