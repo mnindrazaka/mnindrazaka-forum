@@ -5,6 +5,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import React, { useMemo } from "react";
 import { TamaguiProvider } from "tamagui";
+import NextNProgress from "nextjs-progressbar";
 
 import config from "../../tamagui.config";
 import Script from "next/script";
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
           __html: "document.documentElement.classList.add('t_unmounted')",
         }}
       />
+      <NextNProgress />
       <NextThemeProvider
         onChangeTheme={(name) => setTheme(name as "dark" | "light")}
       >
