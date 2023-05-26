@@ -6,7 +6,6 @@ import { XStackProps } from "tamagui";
 export type CommentCardWidgetProps = {
   serial: string;
   voteCount: number;
-  title: string;
   content: string;
   datetime: string;
   onCommentButtonPress?: () => void;
