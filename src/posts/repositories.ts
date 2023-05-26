@@ -24,12 +24,12 @@ export async function getPostList({
   return { posts: data, hasNextPage };
 }
 
-export type CreatePosParams = {
+export type CreatePostParams = {
   title: string;
   content: string;
 };
 
-export async function createPost({ title, content }: CreatePosParams) {
+export async function createPost({ title, content }: CreatePostParams) {
   const slug = title
     .toLowerCase()
     .trim()

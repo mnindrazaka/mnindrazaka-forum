@@ -10,7 +10,6 @@ export type CommentCardProps = {
   onVoteDownPress?: () => void;
   content: string;
   datetime: string;
-  commentCount: number;
   onCommentButtonPress?: () => void;
 } & XStackProps;
 
@@ -20,7 +19,6 @@ export function CommentCard({
   onVoteDownPress,
   content,
   datetime,
-  commentCount,
   onCommentButtonPress,
   ...containerProps
 }: CommentCardProps) {
