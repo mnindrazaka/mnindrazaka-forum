@@ -1,38 +1,23 @@
 import React from "react";
-import { Button, Input, Label, Spinner, XStack, YStack } from "tamagui";
+import { Button, Spinner, XStack, YStack } from "tamagui";
 import { MarkdownEditor } from "../../uikits/components";
 
-export type PostFormProps = {
-  title: string;
+export type CommentFormProps = {
   content: string;
-  onChangeTitle?: (value: string) => void;
   onChangeContent?: (value: string) => void;
   onSubmit?: () => void;
   isSubmitting?: boolean;
 };
 
-export function PostForm({
-  title,
+export function CommentForm({
   content,
-  onChangeTitle,
   onChangeContent,
   onSubmit,
   isSubmitting,
-}: PostFormProps) {
+}: CommentFormProps) {
   return (
     <YStack space="$3">
-      <YStack>
-        <Label htmlFor="title">Title</Label>
-        <Input
-          id="title"
-          placeholder="Enter post title"
-          value={title}
-          onChangeText={onChangeTitle}
-        />
-      </YStack>
-
       <MarkdownEditor value={content} onChange={onChangeContent} />
-
       <XStack>
         <Button
           onPress={onSubmit}
@@ -45,4 +30,4 @@ export function PostForm({
   );
 }
 
-export default PostForm;
+export default CommentForm;

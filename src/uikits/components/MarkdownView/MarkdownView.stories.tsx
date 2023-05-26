@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { Paragraph, YStack } from "tamagui";
 import { MarkdownView } from "./MarkdownView";
 
 export default {
