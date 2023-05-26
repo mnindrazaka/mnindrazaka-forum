@@ -6,6 +6,7 @@ export type PostCardWidgetProps = {
   slug: string;
   voteCount: number;
   title: string;
+  content?: string;
   datetime: string;
   commentCount: number;
   onCommentButtonPress?: () => void;

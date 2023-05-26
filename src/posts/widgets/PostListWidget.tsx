@@ -63,7 +63,7 @@ export function PostListWidget(props: PostListWidgetProps) {
         />
         <YStack space="$3">
           {posts.map((post) => (
-            <PostCardWidget key={post.serial} {...post} />
+            <PostCardWidget key={post.serial} {...post} content={undefined} />
           ))}
         </YStack>
 

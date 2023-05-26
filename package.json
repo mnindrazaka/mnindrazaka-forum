@@ -28,6 +28,8 @@
     "next-remove-imports": "^1.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.5.0",
     "serve": "^14.2.0",
     "tamagui": "^1.29.4",
     "tamagui-loader": "^1.29.4",
@@ -43,6 +45,7 @@
     "@storybook/nextjs": "^7.0.15",
     "@storybook/react": "^7.0.15",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@types/react-syntax-highlighter": "^15.5.7",
     "eslint-plugin-storybook": "^0.6.12",
     "storybook": "^7.0.15",
     "storybook-dark-mode": "^3.0.0"

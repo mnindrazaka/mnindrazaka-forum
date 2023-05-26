@@ -3,13 +3,14 @@ import React from "react";
 import { Button, H3, Paragraph, XStack, XStackProps, YStack } from "tamagui";
 import { PostAttribute } from "./PostAttribute";
 import dayjs from "dayjs";
-import { SkeletonItem } from "../../uikits/components";
+import { MarkdownView, SkeletonItem } from "../../uikits/components";
 
 export type PostCardProps = {
   voteCount: number;
   onVoteUpPress?: () => void;
   onVoteDownPress?: () => void;
   title: string;
+  content?: string;
   datetime: string;
   commentCount: number;
   onCommentButtonPress?: () => void;
@@ -20,6 +21,7 @@ export function PostCard({
   onVoteUpPress,
   onVoteDownPress,
   title,
+  content,
   datetime,
   commentCount,
   onCommentButtonPress,
@@ -56,6 +58,12 @@ export function PostCard({
         <SkeletonItem>
           <Paragraph>Posted {dayjs(datetime).fromNow()}</Paragraph>
         </SkeletonItem>
+
+        {content && (
+          <SkeletonItem>
+            <MarkdownView content={content} />
+          </SkeletonItem>
+        )}
 
         <PostAttribute
           commentCount={commentCount}
