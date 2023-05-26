@@ -6,6 +6,6 @@ export function simulateFetch<T>(callback: () => T) {
       } catch (err) {
         return reject(err);
       }
-    }, 600);
+    }, 300);
   });
 }
