@@ -1,6 +1,7 @@
 process.env.TAMAGUI_TARGET = "web";
 
 const { withTamagui } = require("@tamagui/next-plugin");
+const removeImports = require("next-remove-imports")();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -28,8 +29,8 @@ module.exports = function (name, { defaultConfig }) {
     logTimings: true,
   });
 
-  return {
+  return removeImports({
     ...config,
     ...tamaguiPlugin(config),
-  };
+  });
 };
