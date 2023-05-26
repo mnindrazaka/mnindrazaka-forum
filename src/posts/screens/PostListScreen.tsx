@@ -35,7 +35,7 @@ export function PostListScreen({
   postListWidgetInitialState,
 }: PostListScreenProps) {
   return (
-    <Container>
+    <Container paddingVertical="$3">
       <YStack space="$3">
         <H2>Post List</H2>
         <ScrollView>

@@ -42,8 +42,6 @@ export async function createPost({ title, content }: CreatePosParams) {
       title,
       slug,
       content,
-      // TODO: change this based on authenticated user
-      user: { name: "anonymous", serial: "1", username: "anonymous" },
     },
   });
 

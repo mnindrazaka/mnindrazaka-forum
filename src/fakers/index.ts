@@ -3,7 +3,6 @@ import { nanoid } from "nanoid";
 
 export const posts: Post[] = [
   {
-    comments: [],
     commentCount: 100,
     voteCount: 500,
     content: "Lorem Ipsum Dolor Sit Amet",
@@ -11,14 +10,8 @@ export const posts: Post[] = [
     serial: "1",
     slug: "hokage-terbaik-sepanjang-sejarah-konoha",
     title: "Hokage Terbaik Sepanjang Sejarah Konoha",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
   },
   {
-    comments: [],
     commentCount: 100,
     voteCount: 1000,
     content: "Lorem Ipsum Dolor Sit Amet",
@@ -26,14 +19,8 @@ export const posts: Post[] = [
     serial: "2",
     slug: "konten-terbaik-sepanjang-sejarah-konoha",
     title: "Konten Terbaik Sepanjang Sejarah Konoha",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
   },
   {
-    comments: [],
     commentCount: 100,
     voteCount: 255,
     content: "Lorem Ipsum Dolor Sit Amet",
@@ -41,11 +28,6 @@ export const posts: Post[] = [
     serial: "3",
     slug: "tips-dan-trick-untuk-menjadi-viral",
     title: "Tips dan Trick untuk Menjadi Viral",
-    user: {
-      serial: "1",
-      name: "M. Nindra Zaka",
-      username: "mnindrazaka",
-    },
   },
 ];
 
@@ -123,7 +105,6 @@ export function createPost({ post }: CreatePostParams) {
       ...post,
       commentCount: 0,
       voteCount: 0,
-      comments: [],
       datetime: new Date().toISOString(),
       serial: nanoid(),
     };
