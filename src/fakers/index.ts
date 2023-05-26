@@ -99,8 +99,6 @@ type CreatePostParams = {
 
 export function createPost({ post }: CreatePostParams) {
   return simulateFetch(() => {
-    throw new Error("Server error and hang");
-
     const newPost: Post = {
       ...post,
       commentCount: 0,

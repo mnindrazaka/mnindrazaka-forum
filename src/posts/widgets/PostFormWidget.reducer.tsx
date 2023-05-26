@@ -72,14 +72,22 @@ const reducer = (
     .otherwise(() => prevState);
 };
 
+type OnStateChangeConfig = {
+  onSubmitSuccess?: () => void;
+};
+
 const onStateChange = (
   nextState: PostFormWidgetState,
-  send: (action: PostFormWidgetAction) => void
+  send: (action: PostFormWidgetAction) => void,
+  config: OnStateChangeConfig
 ) => {
   match(nextState)
     .with({ type: "submitting" }, (state) => {
       createPost({ title: state.title, content: state.content })
-        .then(() => send({ type: "submitSuccess" }))
+        .then(() => {
+          send({ type: "submitSuccess" });
+          if (config.onSubmitSuccess) config.onSubmitSuccess();
+        })
         .catch((err) =>
           send({ type: "submitError", errorMessage: err.message })
         );
@@ -87,7 +95,13 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-export const usePostFormWidgetReducer = () => {
+type UsePostFormWidgetReducerParams = {
+  onSubmitSuccess?: () => void;
+};
+
+export const usePostFormWidgetReducer = (
+  params: UsePostFormWidgetReducerParams
+) => {
   const [state, send] = React.useReducer(reducer, {
     type: "main",
     title: "",
@@ -96,8 +110,8 @@ export const usePostFormWidgetReducer = () => {
   });
 
   React.useEffect(() => {
-    onStateChange(state, send);
-  }, [state]);
+    onStateChange(state, send, { onSubmitSuccess: params.onSubmitSuccess });
+  }, [params.onSubmitSuccess, state]);
 
   return [state, send] as const;
 };

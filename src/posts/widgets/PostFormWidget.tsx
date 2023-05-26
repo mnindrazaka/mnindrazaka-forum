@@ -3,8 +3,12 @@ import { PostForm } from "../components";
 import { usePostFormWidgetReducer } from "./PostFormWidget.reducer";
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 
-export function PostFormWidget(props: {}) {
-  const [state, send] = usePostFormWidgetReducer();
+export type PostFormWidgetProps = {
+  onSubmitSuccess?: () => void;
+};
+
+export function PostFormWidget({ onSubmitSuccess }: PostFormWidgetProps) {
+  const [state, send] = usePostFormWidgetReducer({ onSubmitSuccess });
   return (
     <>
       <PostForm

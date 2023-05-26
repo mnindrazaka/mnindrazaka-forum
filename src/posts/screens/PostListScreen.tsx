@@ -1,11 +1,12 @@
 import React from "react";
-import { H2, ScrollView, YStack } from "tamagui";
+import { Button, H2, ScrollView, XStack, YStack } from "tamagui";
 import { PostListWidget } from "../widgets";
 import { Container } from "../../uikits/components";
 import {
   PostListWidgetState,
   getPostListWidgetInitialState,
 } from "../widgets/PostListWidget.reducer";
+import Link from "next/link";
 
 export type PostListScreenProps = {
   postListWidgetInitialState?: PostListWidgetState;
@@ -37,7 +38,12 @@ export function PostListScreen({
   return (
     <Container paddingVertical="$3">
       <YStack space="$3">
-        <H2>Post List</H2>
+        <XStack justifyContent="space-between">
+          <H2>Post List</H2>
+          <Link href="/posts/new" style={{ textDecoration: "none" }}>
+            <Button>Create New</Button>
+          </Link>
+        </XStack>
         <ScrollView>
           <PostListWidget initialState={postListWidgetInitialState} />
         </ScrollView>
