@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 
 export type PostListScreenProps = {
-  postListWidgetInitialState?: PostListWidgetState;
+  postListWidgetInitialState: PostListWidgetState | null;
 };
 
 type GetPostListScreenPropsParams = {
@@ -29,7 +29,7 @@ export async function getPostListScreenProps({
     query,
     sortBy: sortBy !== "hot" && sortBy !== "new" ? "new" : sortBy,
   });
-  return { postListWidgetInitialState };
+  return { postListWidgetInitialState: postListWidgetInitialState ?? null };
 }
 
 export function PostListScreen({
@@ -45,7 +45,9 @@ export function PostListScreen({
           </Link>
         </XStack>
         <ScrollView>
-          <PostListWidget initialState={postListWidgetInitialState} />
+          <PostListWidget
+            initialState={postListWidgetInitialState ?? undefined}
+          />
         </ScrollView>
       </YStack>
     </Container>

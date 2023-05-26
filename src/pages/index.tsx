@@ -16,7 +16,15 @@ export const getServerSideProps: GetServerSideProps<
     query,
     sortBy,
   });
-  return { props };
+
+  /*
+  This code is for example purpose only.
+  Currently we pass null to postListWidgetInitialState to prevent the browser get initial data from server,
+  we need to do this because we are not sync the browser state to server (via endpoint), so the server data is obsolete
+  
+  TODO: implement API endpoint and pass the props.postListWidgetInitialState
+  */
+  return { props: { postListWidgetInitialState: null } };
 };
 
 export default PostListScreen;
