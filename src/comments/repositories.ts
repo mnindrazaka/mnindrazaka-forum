@@ -12,14 +12,16 @@ export async function getCommentList({ postSlug }: GetCommentListParams) {
 export type CreateCommentParams = {
   postSlug: string;
   content: string;
+  parentSerial: string | null;
 };
 
 export async function createComment({
   postSlug,
   content,
+  parentSerial,
 }: CreateCommentParams) {
   const { success } = await fakers.createComment({
-    comment: { content, postSlug },
+    comment: { content, postSlug, parentSerial },
   });
   return { success };
 }

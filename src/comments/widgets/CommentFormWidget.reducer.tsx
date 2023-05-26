@@ -4,6 +4,7 @@ import { createComment } from "../repositories";
 
 type CommentFormWidgetContext = {
   postSlug: string;
+  parentSerial: string | null;
   content: string;
   errorMessage: string | null;
 };
@@ -76,7 +77,11 @@ const onStateChange = (
 ) => {
   match(nextState)
     .with({ type: "submitting" }, (state) => {
-      createComment({ content: state.content, postSlug: state.postSlug })
+      createComment({
+        content: state.content,
+        postSlug: state.postSlug,
+        parentSerial: state.parentSerial,
+      })
         .then(() => {
           send({ type: "submitSuccess" });
           if (config.onSubmitSuccess) config.onSubmitSuccess();
@@ -91,6 +96,7 @@ const onStateChange = (
 type UseCommentFormWidgetReducerParams = {
   onSubmitSuccess?: () => void;
   postSlug: string;
+  parentSerial: string | null;
 };
 
 export const useCommentFormWidgetReducer = (
@@ -101,6 +107,7 @@ export const useCommentFormWidgetReducer = (
     content: "",
     errorMessage: null,
     postSlug: params.postSlug,
+    parentSerial: params.parentSerial,
   });
 
   React.useEffect(() => {

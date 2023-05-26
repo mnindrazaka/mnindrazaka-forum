@@ -6,15 +6,18 @@ import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 export type CommentFormWidgetProps = {
   onSubmitSuccess?: () => void;
   postSlug: string;
+  parentSerial: string | null;
 };
 
 export function CommentFormWidget({
   onSubmitSuccess,
   postSlug,
+  parentSerial,
 }: CommentFormWidgetProps) {
   const [state, send] = useCommentFormWidgetReducer({
     onSubmitSuccess,
     postSlug,
+    parentSerial,
   });
   return (
     <>

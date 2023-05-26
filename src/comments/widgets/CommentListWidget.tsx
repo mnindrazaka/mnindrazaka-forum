@@ -9,6 +9,69 @@ import { Skeleton } from "../../uikits/components";
 import { CommentCardWidget } from "./CommentCardWidget";
 import * as fakers from "../../fakers";
 import { CommentFormWidget } from "./CommentFormWidget";
+import { Comment } from "../models";
+
+type NestedCommentListWidgetProps = {
+  comments: Comment[];
+  comment: Comment;
+  postSlug: string;
+  onSubmitSuccess: () => void;
+};
+
+function NestedCommentListWidget({
+  comments,
+  comment,
+  postSlug,
+  onSubmitSuccess,
+}: NestedCommentListWidgetProps) {
+  const [showReplies, setShowReplies] = React.useState(false);
+  const [showReplyForm, setShowReplyForm] = React.useState(false);
+
+  const childrenComments = comments.filter(
+    (nestedComment) => nestedComment.parentSerial === comment.serial
+  );
+
+  return (
+    <YStack space="$3">
+      <CommentCardWidget
+        {...comment}
+        onCommentButtonPress={() => setShowReplyForm(!showReplyForm)}
+      />
+      {showReplyForm && (
+        <CommentFormWidget
+          postSlug={postSlug}
+          parentSerial={comment.serial}
+          onSubmitSuccess={() => {
+            setShowReplyForm(false);
+            onSubmitSuccess();
+          }}
+        />
+      )}
+
+      {childrenComments.length > 0 && (
+        <XStack>
+          <Button onPress={() => setShowReplies(!showReplies)}>
+            {showReplies ? "Hide Replies" : "Show Replies"}
+          </Button>
+        </XStack>
+      )}
+
+      {showReplies && (
+        <YStack space="$3" marginLeft="$5">
+          {childrenComments.map((nestedComment) => (
+            <NestedCommentListWidget
+              key={nestedComment.serial}
+              comment={nestedComment}
+              comments={comments}
+              onSubmitSuccess={onSubmitSuccess}
+              postSlug={postSlug}
+            />
+          ))}
+        </YStack>
+      )}
+    </YStack>
+  );
+}
 
 export type CommentListWidgetProps = {
   postSlug: string;
@@ -32,13 +95,22 @@ export function CommentListWidget({
       <YStack space="$3">
         <CommentFormWidget
           postSlug={postSlug}
+          parentSerial={null}
           onSubmitSuccess={() => send({ type: "refetch" })}
         />
 
         <YStack space="$3">
-          {comments.map((comment) => (
-            <CommentCardWidget key={comment.serial} {...comment} />
-          ))}
+          {comments
+            .filter((comment) => comment.parentSerial === null)
+            .map((comment) => (
+              <NestedCommentListWidget
+                key={comment.serial}
+                comment={comment}
+                comments={comments}
+                postSlug={postSlug}
+                onSubmitSuccess={() => send({ type: "refetch" })}
+              />
+            ))}
         </YStack>
 
         <AlertDialog open={state.type === "loadingError"}>
