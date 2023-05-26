@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "../../uikits/components";
+import { Container } from "@/uikits";
 import { Button, H2, ScrollView, XStack } from "tamagui";
 import { PostFormWidget } from "../widgets";
 import { useRouter } from "next/router";

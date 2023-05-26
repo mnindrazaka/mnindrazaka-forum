@@ -1,4 +1,4 @@
-import * as fakers from "../fakers";
+import * as fakers from "@/fakers";
 
 type SortBy = "hot" | "new";
 

@@ -14,9 +14,9 @@ import {
 } from "tamagui";
 import { match } from "ts-pattern";
 import { PostFilter } from "../components";
-import { Skeleton } from "../../uikits/components";
+import { Skeleton } from "@/uikits";
 import { PostCardWidget } from "./PostCardWidget";
-import * as fakers from "../../fakers";
+import * as fakers from "@/fakers";
 import { Post } from "../models";
 
 export type PostListWidgetProps = {

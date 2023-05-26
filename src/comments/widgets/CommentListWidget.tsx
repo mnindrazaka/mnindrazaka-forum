@@ -5,9 +5,9 @@ import {
 } from "./CommentListWidget.reducer";
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 import { match } from "ts-pattern";
-import { Skeleton } from "../../uikits/components";
+import { Skeleton } from "@/uikits";
 import { CommentCardWidget } from "./CommentCardWidget";
-import * as fakers from "../../fakers";
+import * as fakers from "@/fakers";
 import { CommentFormWidget } from "./CommentFormWidget";
 import { Comment } from "../models";
 

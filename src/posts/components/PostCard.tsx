@@ -3,7 +3,7 @@ import React from "react";
 import { Button, H3, Paragraph, XStack, XStackProps, YStack } from "tamagui";
 import { PostAttribute } from "./PostAttribute";
 import dayjs from "dayjs";
-import { MarkdownView, SkeletonItem } from "../../uikits/components";
+import { MarkdownView, SkeletonItem } from "@/uikits";
 
 export type PostCardProps = {
   voteCount: number;

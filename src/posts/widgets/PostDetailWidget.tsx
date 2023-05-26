@@ -1,9 +1,9 @@
 import React from "react";
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
-import { Skeleton } from "../../uikits/components";
+import { Skeleton } from "@/uikits";
 import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 import { match } from "ts-pattern";
-import * as fakers from "../../fakers";
+import * as fakers from "@/fakers";
 import { PostCardWidget } from "./PostCardWidget";
 
 export type PostDetailWidgetProps = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { SkeletonItem } from "../../uikits/components";
+import { SkeletonItem } from "@/uikits";
 import { Forward, Gift, MessageSquare } from "@tamagui/lucide-icons";
 import { Button, XStack, XStackProps } from "tamagui";
 

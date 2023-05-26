@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Spinner, XStack, YStack } from "tamagui";
-import { MarkdownEditor } from "../../uikits/components";
+import { MarkdownEditor } from "@/uikits";
 
 export type CommentFormProps = {
   content: string;

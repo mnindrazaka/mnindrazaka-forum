@@ -1,6 +1,7 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 import { shouldExclude } from "tamagui-loader";
 import webpack from "webpack";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 const projectRoot = __dirname;
 
@@ -81,6 +82,8 @@ const config: StorybookConfig = {
         "process.env.TAMAGUI_TARGET": '"web"',
       })
     );
+
+    config.resolve.plugins = [new TsconfigPathsPlugin()];
 
     return config;
   },

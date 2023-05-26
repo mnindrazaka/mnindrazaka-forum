@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Input, Label, Spinner, XStack, YStack } from "tamagui";
-import { MarkdownEditor } from "../../uikits/components";
+import { MarkdownEditor } from "@/uikits";
 
 export type PostFormProps = {
   title: string;

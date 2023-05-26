@@ -1,7 +1,7 @@
 import React from "react";
 import { CommentCard } from "../components";
 import { useCommentCardWidgetReducer } from "./CommentCardWidget.reducer";
-import { Button, XStack, XStackProps, YStack } from "tamagui";
+import { XStackProps, YStack } from "tamagui";
 
 export type CommentCardWidgetProps = {
   serial: string;

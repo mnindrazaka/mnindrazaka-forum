@@ -1,11 +1,8 @@
 import React from "react";
 import { Button, H2, ScrollView, XStack, YStack } from "tamagui";
 import { PostListWidget } from "../widgets";
-import { Container } from "../../uikits/components";
-import {
-  PostListWidgetState,
-  getPostListWidgetInitialState,
-} from "../widgets/PostListWidget.reducer";
+import { Container } from "@/uikits/components";
+import { PostListWidgetState, getPostListWidgetInitialState } from "../widgets";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

@@ -1,8 +1,8 @@
 import { ChevronDown, ChevronUp, MessageSquare } from "@tamagui/lucide-icons";
 import React from "react";
-import { Button, H3, Paragraph, XStack, XStackProps, YStack } from "tamagui";
+import { Button, Paragraph, XStack, XStackProps, YStack } from "tamagui";
 import dayjs from "dayjs";
-import { MarkdownView, SkeletonItem } from "../../uikits/components";
+import { MarkdownView, SkeletonItem } from "@/uikits";
 
 export type CommentCardProps = {
   voteCount: number;
