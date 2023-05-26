@@ -68,3 +68,12 @@ export function updateQueryURL(params: UpdateQueryURLParams) {
   url.searchParams.set("sortBy", params.sortBy);
   window.history.pushState(null, "", url.toString());
 }
+
+export type GetPostDetailParams = {
+  slug: string;
+};
+
+export async function getPostDetail({ slug }: GetPostDetailParams) {
+  const { data } = await fakers.getPostDetail({ slug });
+  return { post: data };
+}

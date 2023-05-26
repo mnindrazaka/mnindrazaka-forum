@@ -85,9 +85,13 @@ type GetPostDetailParams = {
 };
 
 export function getPostDetail({ slug }: GetPostDetailParams) {
-  return simulateFetch(() => ({
-    data: posts.find((post) => post.slug === slug) ?? null,
-  }));
+  return simulateFetch(() => {
+    const data = posts.find((post) => post.slug === slug);
+
+    if (!data) throw new Error("Post is not found");
+
+    return { data };
+  });
 }
 
 type CreatePostParams = {
