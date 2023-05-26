@@ -19,7 +19,7 @@ import { PostCardWidget } from "./PostCardWidget";
 import * as fakers from "../../fakers";
 
 export type PostListWidgetProps = {
-  initialState?: PostListWidgetState;
+  initialState?: PostListWidgetState | null;
 };
 
 export function PostListWidget(props: PostListWidgetProps) {

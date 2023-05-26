@@ -29,7 +29,7 @@ export async function getPostListScreenProps({
     query,
     sortBy: sortBy !== "hot" && sortBy !== "new" ? "new" : sortBy,
   });
-  return { postListWidgetInitialState: postListWidgetInitialState ?? null };
+  return { postListWidgetInitialState };
 }
 
 export function PostListScreen({
@@ -45,9 +45,7 @@ export function PostListScreen({
           </Link>
         </XStack>
         <ScrollView>
-          <PostListWidget
-            initialState={postListWidgetInitialState ?? undefined}
-          />
+          <PostListWidget initialState={postListWidgetInitialState} />
         </ScrollView>
       </YStack>
     </Container>

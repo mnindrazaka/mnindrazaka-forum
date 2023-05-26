@@ -204,7 +204,7 @@ const onStateChange = (
 
 export const getPostListWidgetInitialState = async (
   params: GetPostListParams
-): Promise<PostListWidgetState | undefined> => {
+): Promise<PostListWidgetState | null> => {
   try {
     const { posts, hasNextPage } = await getPostList(params);
     return {
@@ -215,12 +215,12 @@ export const getPostListWidgetInitialState = async (
       errorMessage: null,
     };
   } catch {
-    return undefined;
+    return null;
   }
 };
 
 export const usePostListWidgetReducer = (
-  initialState?: PostListWidgetState
+  initialState?: PostListWidgetState | null
 ) => {
   const [state, send] = React.useReducer(
     reducer,
