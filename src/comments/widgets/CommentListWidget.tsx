@@ -43,6 +43,7 @@ function NestedCommentListWidget({
           parentSerial={comment.serial}
           onSubmitSuccess={() => {
             setShowReplyForm(false);
+            setShowReplies(true);
             onSubmitSuccess();
           }}
         />

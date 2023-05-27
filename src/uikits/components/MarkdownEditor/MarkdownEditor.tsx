@@ -16,6 +16,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
     <MDEditor
       value={value}
       onChange={onChange ? (value) => onChange(value ?? "") : undefined}
+      toolbarHeight={60}
     />
   );
 }

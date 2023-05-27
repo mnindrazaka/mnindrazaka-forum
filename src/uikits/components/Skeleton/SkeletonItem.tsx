@@ -1,13 +1,13 @@
 import React from "react";
 import { useSkeletonContext } from "./Skeleton.context";
-import { Theme, YStack } from "tamagui";
+import { YStack, YStackProps } from "tamagui";
 
 type SkeletonItemVariant = "block" | "inline" | "circular";
 
 export type SkeletonItemProps = {
   children: React.ReactNode;
   variant?: SkeletonItemVariant;
-};
+} & YStackProps;
 
 const styles = {
   block: {
@@ -27,11 +27,12 @@ const styles = {
 export const SkeletonItem = ({
   children,
   variant = "block",
+  ...containerProps
 }: SkeletonItemProps) => {
   const { alignItems, borderRadius } = styles[variant];
   const { isLoading } = useSkeletonContext();
   return isLoading ? (
-    <YStack alignItems={alignItems}>
+    <YStack alignItems={alignItems} {...containerProps}>
       <YStack
         theme="Button"
         backgroundColor="$background"
@@ -42,6 +43,6 @@ export const SkeletonItem = ({
       </YStack>
     </YStack>
   ) : (
-    <YStack>{children}</YStack>
+    <YStack {...containerProps}>{children}</YStack>
   );
 };

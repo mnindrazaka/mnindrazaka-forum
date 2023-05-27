@@ -1,6 +1,13 @@
 import { Flame, Tag } from "@tamagui/lucide-icons";
 import React from "react";
-import { Button, ButtonProps, Input, XStack, XStackProps } from "tamagui";
+import {
+  Button,
+  ButtonProps,
+  Input,
+  XStack,
+  XStackProps,
+  YStack,
+} from "tamagui";
 
 type SortVariant = "hot" | "new";
 
@@ -25,7 +32,7 @@ export function PostFilter({
     onPress: onChangeSort ? () => onChangeSort(sort) : undefined,
   });
   return (
-    <XStack
+    <YStack
       space="$4"
       theme="Card"
       backgroundColor="$background"
@@ -33,15 +40,19 @@ export function PostFilter({
       borderRadius="$5"
       borderColor="$borderColor"
       justifyContent="space-between"
+      $gtXs={{ flexDirection: "row" }}
       {...containerProps}
     >
       <Input
         placeholder="Search Post"
-        minWidth={320}
+        width="100%"
+        maxWidth="100%"
         value={searchValue}
         onChangeText={onChangeSearchValue}
+        flexShrink={1}
+        $gtXs={{ maxWidth: 320 }}
       />
-      <XStack space="$2">
+      <XStack gap="$3" flexWrap="wrap">
         <Button icon={<Flame />} {...getSortButtonProps("hot")}>
           Hot
         </Button>
@@ -49,6 +60,6 @@ export function PostFilter({
           New
         </Button>
       </XStack>
-    </XStack>
+    </YStack>
   );
 }

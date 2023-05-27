@@ -14,7 +14,7 @@ export function PostAttribute({
   ...containerProps
 }: PostAttributeProps) {
   return (
-    <XStack space="$3" {...containerProps}>
+    <XStack {...containerProps} flexWrap="wrap" gap="$3">
       <SkeletonItem>
         <Button icon={MessageSquare} onPress={onCommentButtonPress} size="$3">
           {`${commentCount} Comments`}

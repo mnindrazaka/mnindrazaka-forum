@@ -50,7 +50,7 @@ export function PostCard({
           <Button icon={ChevronDown} size="$2" onPress={onVoteDownPress} />
         </SkeletonItem>
       </YStack>
-      <YStack space="$3">
+      <YStack space="$3" flexShrink={1}>
         <SkeletonItem>
           <H3>{title}</H3>
         </SkeletonItem>
