@@ -10,6 +10,7 @@ import { CommentCardWidget } from "../CommentCardWidget";
 import * as fakers from "@/fakers";
 import { CommentFormWidget } from "../CommentFormWidget";
 import { Comment } from "../../models";
+import { CornerRightDown, CornerRightUp } from "@tamagui/lucide-icons";
 
 type NestedCommentListWidgetProps = {
   comments: Comment[];
@@ -51,24 +52,37 @@ function NestedCommentListWidget({
 
       {childrenComments.length > 0 && (
         <XStack>
-          <Button onPress={() => setShowReplies(!showReplies)}>
+          <Button
+            onPress={() => setShowReplies(!showReplies)}
+            size="$2"
+            iconAfter={showReplies ? CornerRightUp : CornerRightDown}
+          >
             {showReplies ? "Hide Replies" : "Show Replies"}
           </Button>
         </XStack>
       )}
 
       {showReplies && (
-        <YStack space="$3" marginLeft="$5">
-          {childrenComments.map((nestedComment) => (
-            <NestedCommentListWidget
-              key={nestedComment.serial}
-              comment={nestedComment}
-              comments={comments}
-              onSubmitSuccess={onSubmitSuccess}
-              postSlug={postSlug}
-            />
-          ))}
-        </YStack>
+        <XStack>
+          <YStack
+            borderLeftWidth={1}
+            borderColor="$borderColor"
+            onPress={() => setShowReplies(false)}
+            cursor="pointer"
+            width="$1"
+          />
+          <YStack space="$3">
+            {childrenComments.map((nestedComment) => (
+              <NestedCommentListWidget
+                key={nestedComment.serial}
+                comment={nestedComment}
+                comments={comments}
+                onSubmitSuccess={onSubmitSuccess}
+                postSlug={postSlug}
+              />
+            ))}
+          </YStack>
+        </XStack>
       )}
     </YStack>
   );

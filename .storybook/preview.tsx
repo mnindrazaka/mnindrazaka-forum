@@ -6,10 +6,8 @@ import { useDarkMode } from "storybook-dark-mode";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
-import { generateSeeds } from "../src/fakers";
 
 dayjs.extend(relativeTime);
-generateSeeds();
 
 const preview: Preview = {
   decorators: [

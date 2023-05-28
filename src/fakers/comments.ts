@@ -6,7 +6,7 @@ import { posts } from "./posts";
 export const comments: Comment[] = [
   {
     content: "Mantap sangat gan",
-    postSlug: "quasi-maxime-a",
+    postSlug: posts[0].slug,
     parentSerial: null,
     voteCount: 0,
     datetime: "2023-05-28T07:24:17.863Z",
@@ -14,7 +14,7 @@ export const comments: Comment[] = [
   },
   {
     content: "Keren sekali kontennya",
-    postSlug: "quasi-maxime-a",
+    postSlug: posts[0].slug,
     parentSerial: null,
     voteCount: 0,
     datetime: "2023-05-28T07:24:31.939Z",
@@ -22,7 +22,7 @@ export const comments: Comment[] = [
   },
   {
     content: "Ini gokil sih",
-    postSlug: "quasi-maxime-a",
+    postSlug: posts[0].slug,
     parentSerial: null,
     voteCount: 0,
     datetime: "2023-05-28T07:24:36.671Z",
