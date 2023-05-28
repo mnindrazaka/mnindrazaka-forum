@@ -1,4 +1,5 @@
 import * as fakers from "@/fakers";
+import { getSlug } from "@/utils";
 
 type SortBy = "hot" | "new";
 
@@ -30,13 +31,7 @@ export type CreatePostParams = {
 };
 
 export async function createPost({ title, content }: CreatePostParams) {
-  const slug = title
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
+  const slug = getSlug(title);
   const { success } = await fakers.createPost({
     post: {
       title,

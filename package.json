@@ -39,6 +39,7 @@
     "webpack": "^5.83.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.1",
     "@storybook/addon-essentials": "^7.0.15",
     "@storybook/addon-interactions": "^7.0.15",
     "@storybook/addon-links": "^7.0.15",

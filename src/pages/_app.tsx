@@ -12,12 +12,15 @@ import Script from "next/script";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
+import * as fakers from "@/fakers";
 
 dayjs.extend(relativeTime);
 
 if (process.env.NODE_ENV === "production") {
   require("../../public/tamagui.css");
 }
+
+fakers.generateSeeds();
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useRootTheme();

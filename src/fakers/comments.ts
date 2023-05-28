@@ -2,56 +2,7 @@ import { Comment } from "@/comments/models";
 import { nanoid } from "nanoid";
 import { simulateFetch } from "./utils";
 
-export const comments: Comment[] = [
-  {
-    voteCount: 500,
-    content: "Mantap",
-    datetime: new Date("May 25, 2023 12:00:00").toISOString(),
-    serial: "1",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: null,
-  },
-  {
-    voteCount: 1000,
-    content: "Cakep Sih",
-    datetime: new Date("May 23, 2023 12:00:00").toISOString(),
-    serial: "2",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: null,
-  },
-  {
-    voteCount: 255,
-    content: "Gokil",
-    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
-    serial: "3",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: null,
-  },
-  {
-    voteCount: 255,
-    content: "Mantap aja atau mantap banget ?",
-    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
-    serial: "4",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: "1",
-  },
-  {
-    voteCount: 255,
-    content: "Mantap joossss",
-    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
-    serial: "5",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: "1",
-  },
-  {
-    voteCount: 255,
-    content: "Mantap banget lah, masak mantap aja",
-    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
-    serial: "6",
-    postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    parentSerial: "4",
-  },
-];
+export const comments: Comment[] = [];
 
 type GetCommentListParams = {
   postSlug: string;

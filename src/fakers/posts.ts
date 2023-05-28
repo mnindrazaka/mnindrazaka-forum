@@ -2,35 +2,7 @@ import { Post } from "@/posts/models";
 import { nanoid } from "nanoid";
 import { simulateFetch } from "./utils";
 
-export const posts: Post[] = [
-  {
-    commentCount: 100,
-    voteCount: 500,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date("May 25, 2023 12:00:00").toISOString(),
-    serial: "1",
-    slug: "hokage-terbaik-sepanjang-sejarah-konoha",
-    title: "Hokage Terbaik Sepanjang Sejarah Konoha",
-  },
-  {
-    commentCount: 100,
-    voteCount: 1000,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date("May 23, 2023 12:00:00").toISOString(),
-    serial: "2",
-    slug: "konten-terbaik-sepanjang-sejarah-konoha",
-    title: "Konten Terbaik Sepanjang Sejarah Konoha",
-  },
-  {
-    commentCount: 100,
-    voteCount: 255,
-    content: "Lorem Ipsum Dolor Sit Amet",
-    datetime: new Date("May 20, 2023 12:00:00").toISOString(),
-    serial: "3",
-    slug: "tips-dan-trick-untuk-menjadi-viral",
-    title: "Tips dan Trick untuk Menjadi Viral",
-  },
-];
+export const posts: Post[] = [];
 
 type GetPostListParams = {
   page: number;

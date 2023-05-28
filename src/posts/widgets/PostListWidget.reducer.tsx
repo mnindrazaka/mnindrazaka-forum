@@ -167,7 +167,7 @@ const onStateChange = (
       updateQueryURL({ query: state.query, sortBy: state.sortBy });
       getPostList({
         page: 1,
-        pageSize: 1,
+        pageSize: 20,
         query: state.query,
         sortBy: state.sortBy,
       })
@@ -181,7 +181,7 @@ const onStateChange = (
     .with({ type: "loadingMore" }, async (state) => {
       getPostList({
         page: state.page,
-        pageSize: 1,
+        pageSize: 20,
         query: state.query,
         sortBy: state.sortBy,
       })

@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { PostDetailWidget } from "./PostDetailWidget";
+import { posts } from "@/fakers";
 
 export default {
   component: PostDetailWidget,
@@ -11,5 +12,5 @@ const Template: StoryFn<typeof PostDetailWidget> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  slug: "tips-dan-trick-untuk-menjadi-viral",
+  slug: posts[0].slug,
 };

@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { CommentListWidget } from "./CommentListWidget";
+import { posts } from "@/fakers";
 
 export default {
   component: CommentListWidget,
@@ -11,5 +12,5 @@ const Template: StoryFn<typeof CommentListWidget> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  postSlug: "hokage-terbaik-sepanjang-sejarah-konoha",
+  postSlug: posts[0].slug,
 };
