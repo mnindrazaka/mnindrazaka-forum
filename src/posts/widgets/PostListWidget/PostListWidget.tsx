@@ -53,7 +53,7 @@ export function PostListWidget({
       .otherwise(() => {});
   };
 
-  const posts = isLoading ? fakers.posts : state.posts;
+  const posts = isLoading ? fakers.posts.slice(0, 4) : state.posts;
 
   return (
     <Skeleton isLoading={isLoading}>

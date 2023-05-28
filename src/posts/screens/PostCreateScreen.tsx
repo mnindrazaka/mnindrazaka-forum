@@ -9,12 +9,12 @@ export function PostCreateScreen(_props: {}) {
   const router = useRouter();
   return (
     <ScrollView>
-      <Container paddingVertical="$3">
+      <Container paddingVertical="$3" gap="$5">
         <XStack space="$5" alignItems="center">
           <Button icon={ArrowLeft} onPress={() => router.push("/")} size="$3" />
           <H2>Create Post</H2>
         </XStack>
-        <PostFormWidget onSubmitSuccess={() => router.push("/")} />
+        <PostFormWidget onSubmitSuccess={() => router.push("/?sortBy=new")} />
       </Container>
     </ScrollView>
   );

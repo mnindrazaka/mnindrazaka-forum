@@ -33,7 +33,13 @@ export function PostForm({
   textContent,
 }: PostFormProps) {
   return (
-    <YStack space="$3">
+    <YStack
+      space="$3"
+      theme="Card"
+      backgroundColor="$background"
+      padding="$5"
+      borderRadius="$5"
+    >
       <YStack>
         <Label htmlFor="title">Title</Label>
         <Input
@@ -52,6 +58,7 @@ export function PostForm({
 
       <XStack>
         <Button
+          theme="purple"
           onPress={onSubmit}
           icon={isSubmitting ? <Spinner /> : undefined}
         >

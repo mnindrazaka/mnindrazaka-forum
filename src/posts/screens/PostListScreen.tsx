@@ -23,7 +23,7 @@ export async function getPostListScreenProps({
 }: GetPostListScreenPropsParams): Promise<PostListScreenProps> {
   const postListWidgetInitialState = await getPostListWidgetInitialState({
     page,
-    pageSize: 1,
+    pageSize: 20,
     query,
     sortBy: sortBy !== "hot" && sortBy !== "new" ? "new" : sortBy,
   });
@@ -40,7 +40,7 @@ export function PostListScreen({
         <XStack justifyContent="space-between">
           <H2>Post List</H2>
           <Link href="/posts/new" style={{ textDecoration: "none" }}>
-            <Button>Create New</Button>
+            <Button theme="purple">Create New</Button>
           </Link>
         </XStack>
         <ScrollView>

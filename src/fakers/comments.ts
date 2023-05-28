@@ -3,13 +3,40 @@ import { nanoid } from "nanoid";
 import { simulateFetch } from "./utils";
 import { posts } from "./posts";
 
-export const comments: Comment[] = [];
+export const comments: Comment[] = [
+  {
+    content: "Mantap sangat gan",
+    postSlug: "quasi-maxime-a",
+    parentSerial: null,
+    voteCount: 0,
+    datetime: "2023-05-28T07:24:17.863Z",
+    serial: "zI1VFRS8GZPQWeoAh-jaP",
+  },
+  {
+    content: "Keren sekali kontennya",
+    postSlug: "quasi-maxime-a",
+    parentSerial: null,
+    voteCount: 0,
+    datetime: "2023-05-28T07:24:31.939Z",
+    serial: "jVM94sFQB4VPWXlWlgh2E",
+  },
+  {
+    content: "Ini gokil sih",
+    postSlug: "quasi-maxime-a",
+    parentSerial: null,
+    voteCount: 0,
+    datetime: "2023-05-28T07:24:36.671Z",
+    serial: "57ITs3riQXtE3F8APG08w",
+  },
+];
 
 type GetCommentListParams = {
   postSlug: string;
 };
 
 export function getCommentList({ postSlug }: GetCommentListParams) {
+  console.log(comments);
+
   return simulateFetch(() => {
     const filteredComments = comments.filter((comment) =>
       comment.postSlug.toLowerCase().includes(postSlug)
