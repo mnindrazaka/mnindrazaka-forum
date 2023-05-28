@@ -13,18 +13,20 @@ import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 import { match } from "ts-pattern";
 import * as fakers from "@/fakers";
 import { PostCardWidget } from "../PostCardWidget";
-import { CommentListWidget } from "@/comments";
+import {
+  PostDetailWidgetContext,
+  PostDetailWidgetProvider,
+  usePostDetailWidgetContext,
+} from "./PostDetailWidget.context";
 
-export type PostDetailWidgetProps = {
-  slug: string;
+export type PostDetailWidgetCardProps = {
   onBackButtonPress?: () => void;
 };
 
-export function PostDetailWidget({
-  slug,
+export function PostDetailWidgetCard({
   onBackButtonPress,
-}: PostDetailWidgetProps) {
-  const [state, send] = usePostDetailWidgetReducer({ slug });
+}: PostDetailWidgetCardProps) {
+  const { state, send } = usePostDetailWidgetContext();
 
   const isLoading = match(state)
     .with({ type: "idle" }, { type: "loading" }, { type: "error" }, () => true)
@@ -39,11 +41,6 @@ export function PostDetailWidget({
       <Skeleton isLoading={isLoading}>
         <PostCardWidget {...post} />
       </Skeleton>
-      <H4>Comments</H4>
-      <CommentListWidget
-        postSlug={slug}
-        onSubmitSuccess={() => send({ type: "refetch" })}
-      />
       <AlertDialog open={state.type === "error"}>
         <AlertDialog.Portal>
           <AlertDialog.Overlay />
@@ -62,5 +59,22 @@ export function PostDetailWidget({
         </AlertDialog.Portal>
       </AlertDialog>
     </>
+  );
+}
+
+export type PostDetailWidgetProps = {
+  slug: string;
+  children:
+    | React.ReactNode
+    | ((context: PostDetailWidgetContext) => React.ReactNode);
+};
+
+export function PostDetailWidget({ slug, children }: PostDetailWidgetProps) {
+  const [state, send] = usePostDetailWidgetReducer({ slug });
+  const contextValue = { state, send };
+  return (
+    <PostDetailWidgetProvider value={contextValue}>
+      {typeof children === "function" ? children(contextValue) : children}
+    </PostDetailWidgetProvider>
   );
 }

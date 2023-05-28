@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { PostDetailWidget } from "./PostDetailWidget";
+import { PostDetailWidget, PostDetailWidgetCard } from "./PostDetailWidget";
 import { posts } from "@/fakers";
 
 export default {
@@ -7,7 +7,9 @@ export default {
 } as Meta<typeof PostDetailWidget>;
 
 const Template: StoryFn<typeof PostDetailWidget> = (args) => (
-  <PostDetailWidget {...args} />
+  <PostDetailWidget {...args}>
+    <PostDetailWidgetCard />
+  </PostDetailWidget>
 );
 
 export const Default = Template.bind({});

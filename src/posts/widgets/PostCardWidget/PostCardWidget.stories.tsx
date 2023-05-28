@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { PostCardWidget } from "./PostCardWidget";
+import { posts } from "@/fakers";
 
 export default {
   component: PostCardWidget,
@@ -13,7 +14,7 @@ export const Default = Template.bind({});
 Default.args = {
   commentCount: 100,
   datetime: new Date().toISOString(),
-  slug: "tips-dan-trick-untuk-menjadi-viral",
-  title: "Tips dan Trick untuk Menjadi Viral",
+  slug: posts[0].slug,
+  title: posts[0].title,
   voteCount: 255,
 };

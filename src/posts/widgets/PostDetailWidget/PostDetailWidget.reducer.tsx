@@ -1,28 +1,21 @@
 import React from "react";
 import { match } from "ts-pattern";
 import { Post } from "../../models";
-import {
-  GetPostDetailParams,
-  getPostDetail,
-  votePost,
-} from "../../repositories";
+import { GetPostDetailParams, getPostDetail } from "../../repositories";
 
-type PostDetailWidgetContext = {
+export type PostDetailWidgetState = {
   slug: string;
   post: Post | null;
   errorMessage: string | null;
-};
+} & (
+  | { type: "idle" }
+  | { type: "loading" }
+  | { type: "error"; errorMessage: string }
+  | { type: "main"; post: Post }
+  | { type: "voting"; post: Post }
+);
 
-export type PostDetailWidgetState = PostDetailWidgetContext &
-  (
-    | { type: "idle" }
-    | { type: "loading" }
-    | { type: "error"; errorMessage: string }
-    | { type: "main"; post: Post }
-    | { type: "voting"; post: Post }
-  );
-
-type PostDetailWidgetAction =
+export type PostDetailWidgetAction =
   | {
       type: "fetch";
     }
