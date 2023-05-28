@@ -1,24 +1,8 @@
 import React from "react";
-import dynamic from "next/dynamic";
 
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import {
-  bold,
-  image,
-  italic,
-  link,
-  strikethrough,
-  title,
-  title1,
-  title2,
-  title3,
-  title4,
-  title5,
-  title6,
-} from "@uiw/react-md-editor";
-
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+import type { ICommand, MDEditorProps } from "@uiw/react-md-editor";
 
 export type MarkdownEditorProps = {
   value: string;
@@ -26,11 +10,28 @@ export type MarkdownEditorProps = {
 };
 
 export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
-  return (
-    <MDEditor
+  const [commands, setCommands] = React.useState<ICommand[]>([]);
+  const [Editor, setEditor] = React.useState<
+    React.ComponentType<MDEditorProps> | undefined
+  >();
+
+  /*
+    We need to lazy import the @uiw/react-md-editor module because it is not works in SSR
+  */
+  React.useEffect(() => {
+    import("@uiw/react-md-editor").then(
+      ({ bold, strikethrough, italic, link, image, default: MdEditor }) => {
+        setCommands([bold, strikethrough, italic, link, image]);
+        setEditor(MdEditor);
+      }
+    );
+  }, []);
+
+  return Editor ? (
+    <Editor
       value={value}
       onChange={onChange ? (value) => onChange(value ?? "") : undefined}
-      commands={[bold, strikethrough, italic, link, image]}
+      commands={commands}
     />
-  );
+  ) : null;
 }

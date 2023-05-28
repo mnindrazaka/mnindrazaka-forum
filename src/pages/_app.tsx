@@ -20,14 +20,17 @@ if (process.env.NODE_ENV === "production") {
   require("../../public/tamagui.css");
 }
 
-fakers.generateSeeds();
-
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useRootTheme();
 
   const contents = useMemo(() => {
     return <Component {...pageProps} />;
   }, [Component, pageProps]);
+
+  React.useEffect(() => {
+    fakers.generateSeeds();
+    console.log(fakers.posts);
+  }, []);
 
   return (
     <>
