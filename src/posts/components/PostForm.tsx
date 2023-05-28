@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Input, Label, Spinner, XStack, YStack } from "tamagui";
+import {
+  Button,
+  Input,
+  Label,
+  Paragraph,
+  Spinner,
+  XStack,
+  YStack,
+} from "tamagui";
 import { MarkdownEditor } from "@/uikits";
 
 export type PostFormProps = {
@@ -9,6 +17,10 @@ export type PostFormProps = {
   onChangeContent?: (value: string) => void;
   onSubmit?: () => void;
   isSubmitting?: boolean;
+  textContent?: {
+    value: string;
+    maxLength: number;
+  };
 };
 
 export function PostForm({
@@ -18,6 +30,7 @@ export function PostForm({
   onChangeContent,
   onSubmit,
   isSubmitting,
+  textContent,
 }: PostFormProps) {
   return (
     <YStack space="$3">
@@ -32,6 +45,10 @@ export function PostForm({
       </YStack>
 
       <MarkdownEditor value={content} onChange={onChangeContent} />
+
+      {textContent && (
+        <Paragraph>{`${textContent.value.length} / ${textContent.maxLength}`}</Paragraph>
+      )}
 
       <XStack>
         <Button

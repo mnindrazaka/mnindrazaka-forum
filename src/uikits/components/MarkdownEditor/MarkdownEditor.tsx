@@ -3,6 +3,20 @@ import dynamic from "next/dynamic";
 
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
+import {
+  bold,
+  image,
+  italic,
+  link,
+  strikethrough,
+  title,
+  title1,
+  title2,
+  title3,
+  title4,
+  title5,
+  title6,
+} from "@uiw/react-md-editor";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -16,7 +30,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
     <MDEditor
       value={value}
       onChange={onChange ? (value) => onChange(value ?? "") : undefined}
-      toolbarHeight={60}
+      commands={[bold, strikethrough, italic, link, image]}
     />
   );
 }

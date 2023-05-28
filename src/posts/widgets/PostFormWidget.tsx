@@ -5,10 +5,17 @@ import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 
 export type PostFormWidgetProps = {
   onSubmitSuccess?: () => void;
+  maxTextContentLength?: number;
 };
 
-export function PostFormWidget({ onSubmitSuccess }: PostFormWidgetProps) {
-  const [state, send] = usePostFormWidgetReducer({ onSubmitSuccess });
+export function PostFormWidget({
+  onSubmitSuccess,
+  maxTextContentLength = 255,
+}: PostFormWidgetProps) {
+  const [state, send] = usePostFormWidgetReducer({
+    onSubmitSuccess,
+    maxTextContentLength,
+  });
   return (
     <>
       <PostForm
@@ -18,6 +25,10 @@ export function PostFormWidget({ onSubmitSuccess }: PostFormWidgetProps) {
         onChangeContent={(content) => send({ type: "updateContent", content })}
         isSubmitting={state.type === "submitting"}
         onSubmit={() => send({ type: "submit" })}
+        textContent={{
+          value: state.textContent,
+          maxLength: maxTextContentLength,
+        }}
       />
       <AlertDialog open={state.type === "submittingError"}>
         <AlertDialog.Portal>

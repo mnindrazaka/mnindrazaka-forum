@@ -19,3 +19,14 @@ IsSubmitting.args = {
   content: "",
   isSubmitting: true,
 };
+
+export const ShowTextLength = Template.bind({});
+ShowTextLength.args = {
+  title: "",
+  content: "**lorem ipsum dolor sit amet**",
+  isSubmitting: true,
+  textContent: {
+    value: "lorem ipsum dolor sit amet",
+    maxLength: 255,
+  },
+};

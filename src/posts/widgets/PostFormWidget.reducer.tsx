@@ -1,11 +1,14 @@
 import React from "react";
 import { match } from "ts-pattern";
 import { createPost } from "../repositories";
+import { getPureTexFromMarkdown } from "@/utils";
 
 type PostFormWidgetContext = {
   title: string;
   content: string;
   errorMessage: string | null;
+  textContent: string;
+  maxTextContentLength: number;
 };
 
 export type PostFormWidgetState = PostFormWidgetContext &
@@ -32,10 +35,17 @@ const reducer = (
       ...state,
       title: action.title,
     }))
-    .with([{ type: "main" }, { type: "updateContent" }], ([state, action]) => ({
-      ...state,
-      content: action.content,
-    }))
+    .with([{ type: "main" }, { type: "updateContent" }], ([state, action]) => {
+      const newContent = action.content;
+      const newTextContent = getPureTexFromMarkdown(newContent);
+      const isOverLimit = newTextContent.length > state.maxTextContentLength;
+
+      return {
+        ...state,
+        content: isOverLimit ? state.content : newContent,
+        textContent: isOverLimit ? state.textContent : newTextContent,
+      };
+    })
     .with([{ type: "main" }, { type: "submit" }], ([state]) => ({
       ...state,
       type: "submitting",
@@ -95,21 +105,25 @@ const onStateChange = (
 
 type UsePostFormWidgetReducerParams = {
   onSubmitSuccess?: () => void;
+  maxTextContentLength: number;
 };
 
-export const usePostFormWidgetReducer = (
-  params: UsePostFormWidgetReducerParams
-) => {
+export const usePostFormWidgetReducer = ({
+  onSubmitSuccess,
+  maxTextContentLength,
+}: UsePostFormWidgetReducerParams) => {
   const [state, send] = React.useReducer(reducer, {
     type: "main",
     title: "",
     content: "",
     errorMessage: null,
+    textContent: "",
+    maxTextContentLength,
   });
 
   React.useEffect(() => {
-    onStateChange(state, send, { onSubmitSuccess: params.onSubmitSuccess });
-  }, [params.onSubmitSuccess, state]);
+    onStateChange(state, send, { onSubmitSuccess });
+  }, [onSubmitSuccess, state]);
 
   return [state, send] as const;
 };
