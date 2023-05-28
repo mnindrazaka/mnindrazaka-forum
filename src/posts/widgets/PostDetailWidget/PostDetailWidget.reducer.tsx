@@ -1,29 +1,34 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { Comment } from "../models";
-import { getCommentList } from "../repositories";
+import { Post } from "../../models";
+import {
+  GetPostDetailParams,
+  getPostDetail,
+  votePost,
+} from "../../repositories";
 
-type CommentListWidgetContext = {
-  postSlug: string;
+type PostDetailWidgetContext = {
+  slug: string;
+  post: Post | null;
   errorMessage: string | null;
-  comments: Comment[];
 };
 
-export type CommentListWidgetState = CommentListWidgetContext &
+export type PostDetailWidgetState = PostDetailWidgetContext &
   (
     | { type: "idle" }
     | { type: "loading" }
-    | { type: "loadingError"; errorMessage: string }
-    | { type: "main" }
+    | { type: "error"; errorMessage: string }
+    | { type: "main"; post: Post }
+    | { type: "voting"; post: Post }
   );
 
-type CommentListWidgetAction =
+type PostDetailWidgetAction =
   | {
       type: "fetch";
     }
   | {
       type: "fetchSuccess";
-      comments: Comment[];
+      post: Post;
     }
   | {
       type: "fetchError";
@@ -34,12 +39,12 @@ type CommentListWidgetAction =
     };
 
 const reducer = (
-  prevState: CommentListWidgetState,
-  action: CommentListWidgetAction
-): CommentListWidgetState => {
+  prevState: PostDetailWidgetState,
+  action: PostDetailWidgetAction
+): PostDetailWidgetState => {
   return match<
-    [CommentListWidgetState, CommentListWidgetAction],
-    CommentListWidgetState
+    [PostDetailWidgetState, PostDetailWidgetAction],
+    PostDetailWidgetState
   >([prevState, action])
     .with([{ type: "idle" }, { type: "fetch" }], ([state]) => ({
       ...state,
@@ -50,15 +55,15 @@ const reducer = (
       ([state, action]) => ({
         ...state,
         type: "main",
-        comments: action.comments,
+        post: action.post,
       })
     )
     .with([{ type: "loading" }, { type: "fetchError" }], ([state, action]) => ({
       ...state,
-      type: "loadingError",
+      type: "error",
       errorMessage: action.errorMessage,
     }))
-    .with([{ type: "loadingError" }, { type: "refetch" }], ([state]) => ({
+    .with([{ type: "error" }, { type: "refetch" }], ([state]) => ({
       ...state,
       type: "loading",
     }))
@@ -70,18 +75,16 @@ const reducer = (
 };
 
 const onStateChange = (
-  nextState: CommentListWidgetState,
-  send: (action: CommentListWidgetAction) => void
+  nextState: PostDetailWidgetState,
+  send: (action: PostDetailWidgetAction) => void
 ) => {
   match(nextState)
     .with({ type: "idle" }, () => {
       send({ type: "fetch" });
     })
     .with({ type: "loading" }, (state) => {
-      getCommentList({
-        postSlug: state.postSlug,
-      })
-        .then(({ comments }) => send({ type: "fetchSuccess", comments }))
+      getPostDetail({ slug: state.slug })
+        .then(({ post }) => send({ type: "fetchSuccess", post }))
         .catch((err) =>
           send({ type: "fetchError", errorMessage: err.message })
         );
@@ -89,22 +92,37 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-type UseCommentListWidgetReducerParams = {
-  initialState?: CommentListWidgetState | null;
-  postSlug: string;
+export const getPostDetailWidgetInitialState = async (
+  params: GetPostDetailParams
+): Promise<PostDetailWidgetState | null> => {
+  try {
+    const { post } = await getPostDetail(params);
+    return {
+      ...params,
+      type: "main",
+      errorMessage: null,
+      post,
+    };
+  } catch {
+    return null;
+  }
 };
 
-export const useCommentListWidgetReducer = ({
-  postSlug,
-  initialState,
-}: UseCommentListWidgetReducerParams) => {
+export type UsePostDetailWidgetReducerParams = {
+  slug: string;
+  initialState?: PostDetailWidgetState | null;
+};
+
+export const usePostDetailWidgetReducer = (
+  params: UsePostDetailWidgetReducerParams
+) => {
   const [state, send] = React.useReducer(
     reducer,
-    initialState ?? {
+    params.initialState ?? {
       type: "idle",
-      postSlug,
       errorMessage: null,
-      comments: [],
+      post: null,
+      slug: params.slug,
     }
   );
 

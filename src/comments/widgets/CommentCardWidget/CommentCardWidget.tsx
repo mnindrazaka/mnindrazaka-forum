@@ -1,5 +1,5 @@
 import React from "react";
-import { CommentCard } from "../components";
+import { CommentCard } from "../../components";
 import { useCommentCardWidgetReducer } from "./CommentCardWidget.reducer";
 import { XStackProps, YStack } from "tamagui";
 

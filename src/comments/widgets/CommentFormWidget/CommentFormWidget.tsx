@@ -1,34 +1,31 @@
 import React from "react";
-import { PostForm } from "../components";
-import { usePostFormWidgetReducer } from "./PostFormWidget.reducer";
+import { CommentForm } from "../../components";
+import { useCommentFormWidgetReducer } from "./CommentFormWidget.reducer";
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 
-export type PostFormWidgetProps = {
+export type CommentFormWidgetProps = {
   onSubmitSuccess?: () => void;
-  maxTextContentLength?: number;
+  postSlug: string;
+  parentSerial: string | null;
 };
 
-export function PostFormWidget({
+export function CommentFormWidget({
   onSubmitSuccess,
-  maxTextContentLength = 255,
-}: PostFormWidgetProps) {
-  const [state, send] = usePostFormWidgetReducer({
+  postSlug,
+  parentSerial,
+}: CommentFormWidgetProps) {
+  const [state, send] = useCommentFormWidgetReducer({
     onSubmitSuccess,
-    maxTextContentLength,
+    postSlug,
+    parentSerial,
   });
   return (
     <>
-      <PostForm
-        title={state.title}
+      <CommentForm
         content={state.content}
-        onChangeTitle={(title) => send({ type: "updateTitle", title })}
         onChangeContent={(content) => send({ type: "updateContent", content })}
         isSubmitting={state.type === "submitting"}
         onSubmit={() => send({ type: "submit" })}
-        textContent={{
-          value: state.textContent,
-          maxLength: maxTextContentLength,
-        }}
       />
       <AlertDialog open={state.type === "submittingError"}>
         <AlertDialog.Portal>

@@ -1,6 +1,6 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { votePost } from "../repositories";
+import { votePost } from "../../repositories";
 
 type PostCardWidgetContext = {
   slug: string;

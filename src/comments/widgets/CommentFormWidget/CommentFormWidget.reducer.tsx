@@ -1,20 +1,18 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { createPost } from "../repositories";
-import { getPureTexFromMarkdown } from "@/utils";
+import { createComment } from "../../repositories";
 
-type PostFormWidgetContext = {
-  title: string;
+type CommentFormWidgetContext = {
+  postSlug: string;
+  parentSerial: string | null;
   content: string;
   errorMessage: string | null;
-  textContent: string;
-  maxTextContentLength: number;
 };
 
-export type PostFormWidgetState = PostFormWidgetContext &
+export type CommentFormWidgetState = CommentFormWidgetContext &
   ({ type: "main" } | { type: "submitting" } | { type: "submittingError" });
 
-export type PostFormWidgetAction =
+export type CommentFormWidgetAction =
   | { type: "updateTitle"; title: string }
   | { type: "updateContent"; content: string }
   | { type: "submit" }
@@ -24,28 +22,17 @@ export type PostFormWidgetAction =
   | { type: "cancelSubmit" };
 
 const reducer = (
-  prevState: PostFormWidgetState,
-  action: PostFormWidgetAction
-): PostFormWidgetState => {
+  prevState: CommentFormWidgetState,
+  action: CommentFormWidgetAction
+): CommentFormWidgetState => {
   return match<
-    [PostFormWidgetState, PostFormWidgetAction],
-    PostFormWidgetState
+    [CommentFormWidgetState, CommentFormWidgetAction],
+    CommentFormWidgetState
   >([prevState, action])
-    .with([{ type: "main" }, { type: "updateTitle" }], ([state, action]) => ({
+    .with([{ type: "main" }, { type: "updateContent" }], ([state, action]) => ({
       ...state,
-      title: action.title,
+      content: action.content,
     }))
-    .with([{ type: "main" }, { type: "updateContent" }], ([state, action]) => {
-      const newContent = action.content;
-      const newTextContent = getPureTexFromMarkdown(newContent);
-      const isOverLimit = newTextContent.length > state.maxTextContentLength;
-
-      return {
-        ...state,
-        content: isOverLimit ? state.content : newContent,
-        textContent: isOverLimit ? state.textContent : newTextContent,
-      };
-    })
     .with([{ type: "main" }, { type: "submit" }], ([state]) => ({
       ...state,
       type: "submitting",
@@ -53,7 +40,6 @@ const reducer = (
     .with([{ type: "submitting" }, { type: "submitSuccess" }], ([state]) => ({
       ...state,
       type: "main",
-      title: "",
       content: "",
     }))
     .with(
@@ -85,13 +71,17 @@ type OnStateChangeConfig = {
 };
 
 const onStateChange = (
-  nextState: PostFormWidgetState,
-  send: (action: PostFormWidgetAction) => void,
+  nextState: CommentFormWidgetState,
+  send: (action: CommentFormWidgetAction) => void,
   config: OnStateChangeConfig
 ) => {
   match(nextState)
     .with({ type: "submitting" }, (state) => {
-      createPost({ title: state.title, content: state.content })
+      createComment({
+        content: state.content,
+        postSlug: state.postSlug,
+        parentSerial: state.parentSerial,
+      })
         .then(() => {
           send({ type: "submitSuccess" });
           if (config.onSubmitSuccess) config.onSubmitSuccess();
@@ -103,27 +93,26 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-type UsePostFormWidgetReducerParams = {
+type UseCommentFormWidgetReducerParams = {
   onSubmitSuccess?: () => void;
-  maxTextContentLength: number;
+  postSlug: string;
+  parentSerial: string | null;
 };
 
-export const usePostFormWidgetReducer = ({
-  onSubmitSuccess,
-  maxTextContentLength,
-}: UsePostFormWidgetReducerParams) => {
+export const useCommentFormWidgetReducer = (
+  params: UseCommentFormWidgetReducerParams
+) => {
   const [state, send] = React.useReducer(reducer, {
     type: "main",
-    title: "",
     content: "",
     errorMessage: null,
-    textContent: "",
-    maxTextContentLength,
+    postSlug: params.postSlug,
+    parentSerial: params.parentSerial,
   });
 
   React.useEffect(() => {
-    onStateChange(state, send, { onSubmitSuccess });
-  }, [onSubmitSuccess, state]);
+    onStateChange(state, send, { onSubmitSuccess: params.onSubmitSuccess });
+  }, [params.onSubmitSuccess, state]);
 
   return [state, send] as const;
 };

@@ -13,11 +13,11 @@ import {
   YStack,
 } from "tamagui";
 import { match } from "ts-pattern";
-import { PostFilter } from "../components";
+import { PostFilter } from "../../components";
 import { Skeleton } from "@/uikits";
-import { PostCardWidget } from "./PostCardWidget";
+import { PostCardWidget } from "../PostCardWidget";
 import * as fakers from "@/fakers";
-import { Post } from "../models";
+import { Post } from "../../models";
 
 export type PostListWidgetProps = {
   initialState?: PostListWidgetState | null;

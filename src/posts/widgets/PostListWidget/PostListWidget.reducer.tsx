@@ -1,11 +1,11 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { Post } from "../models";
+import { Post } from "../../models";
 import {
   GetPostListParams,
   getPostList,
   updateQueryURL,
-} from "../repositories";
+} from "../../repositories";
 
 type PostListWidgetContext = {
   query: string;

@@ -12,7 +12,7 @@ import { Skeleton } from "@/uikits";
 import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 import { match } from "ts-pattern";
 import * as fakers from "@/fakers";
-import { PostCardWidget } from "./PostCardWidget";
+import { PostCardWidget } from "../PostCardWidget";
 import { CommentListWidget } from "@/comments";
 
 export type PostDetailWidgetProps = {

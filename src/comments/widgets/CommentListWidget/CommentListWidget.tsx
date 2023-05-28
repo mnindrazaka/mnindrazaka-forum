@@ -6,10 +6,10 @@ import {
 import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 import { match } from "ts-pattern";
 import { Skeleton } from "@/uikits";
-import { CommentCardWidget } from "./CommentCardWidget";
+import { CommentCardWidget } from "../CommentCardWidget";
 import * as fakers from "@/fakers";
-import { CommentFormWidget } from "./CommentFormWidget";
-import { Comment } from "../models";
+import { CommentFormWidget } from "../CommentFormWidget";
+import { Comment } from "../../models";
 
 type NestedCommentListWidgetProps = {
   comments: Comment[];

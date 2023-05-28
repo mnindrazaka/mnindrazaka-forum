@@ -1,8 +1,7 @@
-import { Button, H3, H4, ScrollView, XStack } from "tamagui";
+import { Button, H3, ScrollView, XStack } from "tamagui";
 import { Container } from "@/uikits";
 import React from "react";
 import { PostDetailWidget } from "../widgets";
-import { CommentListWidget } from "@/comments";
 import { ArrowLeft } from "@tamagui/lucide-icons";
 import { useRouter } from "next/router";
 

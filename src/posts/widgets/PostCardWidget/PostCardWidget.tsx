@@ -1,5 +1,5 @@
 import React from "react";
-import { PostCard } from "../components";
+import { PostCard } from "../../components";
 import { usePostCardWidgetReducer } from "./PostCardWidget.reducer";
 import { XStackProps } from "tamagui";
 

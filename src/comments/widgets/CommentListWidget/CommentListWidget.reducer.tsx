@@ -1,30 +1,29 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { Post } from "../models";
-import { GetPostDetailParams, getPostDetail, votePost } from "../repositories";
+import { Comment } from "../../models";
+import { getCommentList } from "../../repositories";
 
-type PostDetailWidgetContext = {
-  slug: string;
-  post: Post | null;
+type CommentListWidgetContext = {
+  postSlug: string;
   errorMessage: string | null;
+  comments: Comment[];
 };
 
-export type PostDetailWidgetState = PostDetailWidgetContext &
+export type CommentListWidgetState = CommentListWidgetContext &
   (
     | { type: "idle" }
     | { type: "loading" }
-    | { type: "error"; errorMessage: string }
-    | { type: "main"; post: Post }
-    | { type: "voting"; post: Post }
+    | { type: "loadingError"; errorMessage: string }
+    | { type: "main" }
   );
 
-type PostDetailWidgetAction =
+type CommentListWidgetAction =
   | {
       type: "fetch";
     }
   | {
       type: "fetchSuccess";
-      post: Post;
+      comments: Comment[];
     }
   | {
       type: "fetchError";
@@ -35,12 +34,12 @@ type PostDetailWidgetAction =
     };
 
 const reducer = (
-  prevState: PostDetailWidgetState,
-  action: PostDetailWidgetAction
-): PostDetailWidgetState => {
+  prevState: CommentListWidgetState,
+  action: CommentListWidgetAction
+): CommentListWidgetState => {
   return match<
-    [PostDetailWidgetState, PostDetailWidgetAction],
-    PostDetailWidgetState
+    [CommentListWidgetState, CommentListWidgetAction],
+    CommentListWidgetState
   >([prevState, action])
     .with([{ type: "idle" }, { type: "fetch" }], ([state]) => ({
       ...state,
@@ -51,15 +50,15 @@ const reducer = (
       ([state, action]) => ({
         ...state,
         type: "main",
-        post: action.post,
+        comments: action.comments,
       })
     )
     .with([{ type: "loading" }, { type: "fetchError" }], ([state, action]) => ({
       ...state,
-      type: "error",
+      type: "loadingError",
       errorMessage: action.errorMessage,
     }))
-    .with([{ type: "error" }, { type: "refetch" }], ([state]) => ({
+    .with([{ type: "loadingError" }, { type: "refetch" }], ([state]) => ({
       ...state,
       type: "loading",
     }))
@@ -71,16 +70,18 @@ const reducer = (
 };
 
 const onStateChange = (
-  nextState: PostDetailWidgetState,
-  send: (action: PostDetailWidgetAction) => void
+  nextState: CommentListWidgetState,
+  send: (action: CommentListWidgetAction) => void
 ) => {
   match(nextState)
     .with({ type: "idle" }, () => {
       send({ type: "fetch" });
     })
     .with({ type: "loading" }, (state) => {
-      getPostDetail({ slug: state.slug })
-        .then(({ post }) => send({ type: "fetchSuccess", post }))
+      getCommentList({
+        postSlug: state.postSlug,
+      })
+        .then(({ comments }) => send({ type: "fetchSuccess", comments }))
         .catch((err) =>
           send({ type: "fetchError", errorMessage: err.message })
         );
@@ -88,37 +89,22 @@ const onStateChange = (
     .otherwise(() => {});
 };
 
-export const getPostDetailWidgetInitialState = async (
-  params: GetPostDetailParams
-): Promise<PostDetailWidgetState | null> => {
-  try {
-    const { post } = await getPostDetail(params);
-    return {
-      ...params,
-      type: "main",
-      errorMessage: null,
-      post,
-    };
-  } catch {
-    return null;
-  }
+type UseCommentListWidgetReducerParams = {
+  initialState?: CommentListWidgetState | null;
+  postSlug: string;
 };
 
-export type UsePostDetailWidgetReducerParams = {
-  slug: string;
-  initialState?: PostDetailWidgetState | null;
-};
-
-export const usePostDetailWidgetReducer = (
-  params: UsePostDetailWidgetReducerParams
-) => {
+export const useCommentListWidgetReducer = ({
+  postSlug,
+  initialState,
+}: UseCommentListWidgetReducerParams) => {
   const [state, send] = React.useReducer(
     reducer,
-    params.initialState ?? {
+    initialState ?? {
       type: "idle",
+      postSlug,
       errorMessage: null,
-      post: null,
-      slug: params.slug,
+      comments: [],
     }
   );
 

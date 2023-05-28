@@ -1,6 +1,6 @@
 import React from "react";
 import { match } from "ts-pattern";
-import { voteComment } from "../repositories";
+import { voteComment } from "../../repositories";
 
 type CommentCardWidgetContext = {
   serial: string;
