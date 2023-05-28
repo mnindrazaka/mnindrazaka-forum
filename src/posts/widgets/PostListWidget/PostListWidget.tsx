@@ -7,6 +7,7 @@ import {
   AlertDialog,
   Button,
   H3,
+  H4,
   Paragraph,
   Spinner,
   XStack,
@@ -18,6 +19,7 @@ import { Skeleton } from "@/uikits";
 import { PostCardWidget } from "../PostCardWidget";
 import * as fakers from "@/fakers";
 import { Post } from "../../models";
+import { PackageOpen } from "@tamagui/lucide-icons";
 
 export type PostListWidgetProps = {
   initialState?: PostListWidgetState | null;
@@ -67,17 +69,24 @@ export function PostListWidget({
           onChangeSort={(sortBy) => send({ type: "updateSortBy", sortBy })}
         />
         <YStack space="$3">
-          {posts.map((post) => (
-            <PostCardWidget
-              key={post.serial}
-              {...post}
-              content={undefined}
-              cursor="pointer"
-              onPress={
-                onPostCardPress ? () => onPostCardPress(post) : undefined
-              }
-            />
-          ))}
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <PostCardWidget
+                key={post.serial}
+                {...post}
+                content={undefined}
+                cursor="pointer"
+                onPress={
+                  onPostCardPress ? () => onPostCardPress(post) : undefined
+                }
+              />
+            ))
+          ) : (
+            <YStack alignItems="center" space="$3">
+              <PackageOpen size="$4" />
+              <H4>No Post Yet</H4>
+            </YStack>
+          )}
         </YStack>
 
         {state.hasNextPage && (

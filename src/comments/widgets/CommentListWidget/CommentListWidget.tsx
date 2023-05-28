@@ -3,14 +3,26 @@ import {
   CommentListWidgetState,
   useCommentListWidgetReducer,
 } from "./CommentListWidget.reducer";
-import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
+import {
+  AlertDialog,
+  Button,
+  H3,
+  H4,
+  Paragraph,
+  XStack,
+  YStack,
+} from "tamagui";
 import { match } from "ts-pattern";
 import { Skeleton } from "@/uikits";
 import { CommentCardWidget } from "../CommentCardWidget";
 import * as fakers from "@/fakers";
 import { CommentFormWidget } from "../CommentFormWidget";
 import { Comment } from "../../models";
-import { CornerRightDown, CornerRightUp } from "@tamagui/lucide-icons";
+import {
+  CornerRightDown,
+  CornerRightUp,
+  PackageOpen,
+} from "@tamagui/lucide-icons";
 
 type NestedCommentListWidgetProps = {
   comments: Comment[];
@@ -112,6 +124,10 @@ export function CommentListWidget({
     if (onSubmitSuccess) onSubmitSuccess();
   };
 
+  const parentComments = comments.filter(
+    (comment) => comment.parentSerial === null
+  );
+
   return (
     <Skeleton isLoading={isLoading}>
       <YStack space="$3">
@@ -122,9 +138,8 @@ export function CommentListWidget({
         />
 
         <YStack space="$3">
-          {comments
-            .filter((comment) => comment.parentSerial === null)
-            .map((comment) => (
+          {parentComments.length > 0 ? (
+            parentComments.map((comment) => (
               <NestedCommentListWidget
                 key={comment.serial}
                 comment={comment}
@@ -132,7 +147,13 @@ export function CommentListWidget({
                 postSlug={postSlug}
                 onSubmitSuccess={handleSubmitSuccess}
               />
-            ))}
+            ))
+          ) : (
+            <YStack alignItems="center" space="$3">
+              <PackageOpen size="$4" />
+              <H4>No Comment Yet</H4>
+            </YStack>
+          )}
         </YStack>
 
         <AlertDialog open={state.type === "loadingError"}>
