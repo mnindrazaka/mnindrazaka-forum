@@ -1,10 +1,19 @@
 import React from "react";
-import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
+import {
+  AlertDialog,
+  Button,
+  H3,
+  H4,
+  Paragraph,
+  XStack,
+  YStack,
+} from "tamagui";
 import { Skeleton } from "@/uikits";
 import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 import { match } from "ts-pattern";
 import * as fakers from "@/fakers";
 import { PostCardWidget } from "./PostCardWidget";
+import { CommentListWidget } from "@/comments";
 
 export type PostDetailWidgetProps = {
   slug: string;
@@ -30,6 +39,11 @@ export function PostDetailWidget({
       <Skeleton isLoading={isLoading}>
         <PostCardWidget {...post} />
       </Skeleton>
+      <H4>Comments</H4>
+      <CommentListWidget
+        postSlug={slug}
+        onSubmitSuccess={() => send({ type: "refetch" })}
+      />
       <AlertDialog open={state.type === "error"}>
         <AlertDialog.Portal>
           <AlertDialog.Overlay />

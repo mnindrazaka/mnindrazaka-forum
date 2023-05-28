@@ -2,6 +2,7 @@ import { getSlug } from "@/utils";
 import { posts } from "./posts";
 import { comments } from "./comments";
 import { faker } from "@faker-js/faker";
+import { nanoid } from "nanoid";
 
 export function generateSeeds() {
   for (let i = 1; i <= 40; i++) {
@@ -9,7 +10,7 @@ export function generateSeeds() {
     const slug = getSlug(title);
 
     posts.push({
-      serial: String(i),
+      serial: nanoid(),
       commentCount: 3,
       content: faker.lorem.paragraph(),
       datetime: faker.date.anytime().toISOString(),
@@ -20,7 +21,7 @@ export function generateSeeds() {
 
     for (let j = 1; j <= 3; j++) {
       comments.push({
-        serial: String(i),
+        serial: nanoid(),
         content: faker.lorem.paragraph(),
         datetime: faker.date.anytime().toISOString(),
         parentSerial: null,

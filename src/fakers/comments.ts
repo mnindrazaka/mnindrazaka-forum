@@ -1,6 +1,7 @@
 import { Comment } from "@/comments/models";
 import { nanoid } from "nanoid";
 import { simulateFetch } from "./utils";
+import { posts } from "./posts";
 
 export const comments: Comment[] = [];
 
@@ -29,6 +30,10 @@ type CreateCommentParams = {
 
 export function createComment({ comment }: CreateCommentParams) {
   return simulateFetch(() => {
+    const index = posts.findIndex((post) => post.slug === comment.postSlug);
+    if (index === -1) throw new Error("Post is not found");
+    posts[index].commentCount++;
+
     const newComment: Comment = {
       ...comment,
       voteCount: 0,

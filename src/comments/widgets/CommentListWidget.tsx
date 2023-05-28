@@ -77,11 +77,13 @@ function NestedCommentListWidget({
 export type CommentListWidgetProps = {
   postSlug: string;
   initialState?: CommentListWidgetState | null;
+  onSubmitSuccess?: () => void;
 };
 
 export function CommentListWidget({
   initialState,
   postSlug,
+  onSubmitSuccess,
 }: CommentListWidgetProps) {
   const [state, send] = useCommentListWidgetReducer({ initialState, postSlug });
 
@@ -91,13 +93,18 @@ export function CommentListWidget({
 
   const comments = isLoading ? fakers.comments : state.comments;
 
+  const handleSubmitSuccess = () => {
+    send({ type: "refetch" });
+    if (onSubmitSuccess) onSubmitSuccess();
+  };
+
   return (
     <Skeleton isLoading={isLoading}>
       <YStack space="$3">
         <CommentFormWidget
           postSlug={postSlug}
           parentSerial={null}
-          onSubmitSuccess={() => send({ type: "refetch" })}
+          onSubmitSuccess={handleSubmitSuccess}
         />
 
         <YStack space="$3">
@@ -109,7 +116,7 @@ export function CommentListWidget({
                 comment={comment}
                 comments={comments}
                 postSlug={postSlug}
-                onSubmitSuccess={() => send({ type: "refetch" })}
+                onSubmitSuccess={handleSubmitSuccess}
               />
             ))}
         </YStack>

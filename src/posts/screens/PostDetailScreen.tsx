@@ -23,8 +23,6 @@ export function PostDetailScreen({ slug }: PostDetailScreenProps) {
           slug={slug}
           onBackButtonPress={() => router.push("/")}
         />
-        <H4>Comments</H4>
-        <CommentListWidget postSlug={slug} />
       </ScrollView>
     </Container>
   );
