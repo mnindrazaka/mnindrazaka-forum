@@ -227,7 +227,7 @@ export const usePostListWidgetReducer = (
     initialState ?? {
       type: "idle",
       query: "",
-      sortBy: "new",
+      sortBy: "hot",
       errorMessage: null,
       posts: [],
       page: 1,
