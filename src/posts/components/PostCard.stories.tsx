@@ -34,3 +34,13 @@ IsLoading.args = {
   content: `Hi Gaes, ini gimana ya kalau aku buat jadi tebal pake **begini** ?`,
 };
 IsLoading.decorators = [(Story) => <Skeleton isLoading>{Story()}</Skeleton>];
+
+export const IsVoting = Template.bind({});
+IsVoting.args = {
+  title: "Hokage Terbaik Sepanjang Sejarah Konoha",
+  datetime: new Date().toISOString(),
+  voteCount: 285,
+  commentCount: 685,
+  content: `Hi Gaes, ini gimana ya kalau aku buat jadi tebal pake **begini** ?`,
+  isVoting: true,
+};
