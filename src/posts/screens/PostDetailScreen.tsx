@@ -1,7 +1,7 @@
-import { Button, H3, ScrollView, XStack } from "tamagui";
+import { Button, H3, H4, ScrollView, XStack } from "tamagui";
 import { Container } from "@/uikits";
 import React from "react";
-import { PostDetailWidget, PostDetailWidgetCard } from "../widgets";
+import { PostDetailWidget, PostDetailWidgetContent } from "../widgets";
 import { ArrowLeft } from "@tamagui/lucide-icons";
 import { useRouter } from "next/router";
 import { CommentListWidget } from "@/comments";
@@ -22,9 +22,10 @@ export function PostDetailScreen({ slug }: PostDetailScreenProps) {
         <PostDetailWidget slug={slug}>
           {({ send }) => (
             <>
-              <PostDetailWidgetCard
+              <PostDetailWidgetContent
                 onBackButtonPress={() => router.push("/")}
               />
+              <H4>Comments</H4>
               <CommentListWidget
                 postSlug={slug}
                 onSubmitSuccess={() => send({ type: "refetch" })}

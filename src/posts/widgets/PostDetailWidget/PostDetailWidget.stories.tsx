@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { PostDetailWidget, PostDetailWidgetCard } from "./PostDetailWidget";
+import { PostDetailWidget, PostDetailWidgetContent } from "./PostDetailWidget";
 import { posts } from "@/fakers";
 
 export default {
@@ -8,7 +8,7 @@ export default {
 
 const Template: StoryFn<typeof PostDetailWidget> = (args) => (
   <PostDetailWidget {...args}>
-    <PostDetailWidgetCard />
+    <PostDetailWidgetContent />
   </PostDetailWidget>
 );
 

@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  AlertDialog,
-  Button,
-  H3,
-  H4,
-  Paragraph,
-  XStack,
-  YStack,
-} from "tamagui";
+import { AlertDialog, Button, H3, Paragraph, XStack, YStack } from "tamagui";
 import { Skeleton } from "@/uikits";
-import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 import { match } from "ts-pattern";
 import * as fakers from "@/fakers";
 import { PostCardWidget } from "../PostCardWidget";
@@ -18,14 +9,15 @@ import {
   PostDetailWidgetProvider,
   usePostDetailWidgetContext,
 } from "./PostDetailWidget.context";
+import { usePostDetailWidgetReducer } from "./PostDetailWidget.reducer";
 
-export type PostDetailWidgetCardProps = {
+export type PostDetailWidgetContentProps = {
   onBackButtonPress?: () => void;
 };
 
-export function PostDetailWidgetCard({
+export function PostDetailWidgetContent({
   onBackButtonPress,
-}: PostDetailWidgetCardProps) {
+}: PostDetailWidgetContentProps) {
   const { state, send } = usePostDetailWidgetContext();
 
   const isLoading = match(state)
