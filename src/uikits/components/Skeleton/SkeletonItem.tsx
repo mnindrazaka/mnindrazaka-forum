@@ -38,6 +38,7 @@ export const SkeletonItem = ({
         backgroundColor="$background"
         borderRadius={borderRadius}
         pointerEvents="none"
+        role="progressbar"
       >
         <YStack opacity={0}>{children}</YStack>
       </YStack>
