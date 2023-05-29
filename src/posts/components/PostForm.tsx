@@ -50,7 +50,11 @@ export function PostForm({
         />
       </YStack>
 
-      <MarkdownEditor value={content} onChange={onChangeContent} />
+      <MarkdownEditor
+        value={content}
+        onChange={onChangeContent}
+        label="content"
+      />
 
       {textContent && (
         <Paragraph>{`${textContent.value.length} / ${textContent.maxLength}`}</Paragraph>

@@ -7,9 +7,14 @@ import type { ICommand, MDEditorProps } from "@uiw/react-md-editor";
 export type MarkdownEditorProps = {
   value: string;
   onChange?: (value: string) => void;
+  label?: string;
 };
 
-export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
+export function MarkdownEditor({
+  value,
+  onChange,
+  label,
+}: MarkdownEditorProps) {
   const [commands, setCommands] = React.useState<ICommand[]>([]);
   const [Editor, setEditor] = React.useState<
     React.ComponentType<MDEditorProps> | undefined
@@ -32,6 +37,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
       value={value}
       onChange={onChange ? (value) => onChange(value ?? "") : undefined}
       commands={commands}
+      textareaProps={{ "aria-label": label }}
     />
   ) : null;
 }

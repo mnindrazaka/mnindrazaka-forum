@@ -55,6 +55,7 @@ const reducer = (
       type: "main",
       title: "",
       content: "",
+      textContent: "",
     }))
     .with(
       [{ type: "submitting" }, { type: "submitError" }],
