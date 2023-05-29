@@ -22,11 +22,11 @@ I have provided a live demo of the forum website where you can explore its featu
 
 ### 1.1. Website
 
-https://karirlab-forum.vercel.app
+https://mnindrazaka-forum.vercel.app
 
 ### 1.2. Storybook
 
-https://karirlab-forum-storybook.vercel.app/
+https://mnindrazaka-forum-storybook.vercel.app
 
 ## 2. Development
 
