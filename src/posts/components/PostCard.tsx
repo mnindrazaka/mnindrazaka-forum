@@ -37,6 +37,8 @@ export function PostCard({
   onCommentButtonPress,
   ...containerProps
 }: PostCardProps) {
+  const handleButtonVote = (callback?: () => void) => {};
+
   return (
     <XStack
       space="$4"
@@ -52,7 +54,10 @@ export function PostCard({
           <Button
             icon={ChevronUp}
             size="$2"
-            onPress={onVoteUpPress}
+            onPress={(event) => {
+              event.stopPropagation();
+              if (onVoteUpPress) onVoteUpPress();
+            }}
             aria-label="vote up"
           />
         </SkeletonItem>
@@ -65,7 +70,10 @@ export function PostCard({
           <Button
             icon={ChevronDown}
             size="$2"
-            onPress={onVoteDownPress}
+            onPress={(event) => {
+              event.stopPropagation();
+              if (onVoteDownPress) onVoteDownPress();
+            }}
             aria-label="vote down"
           />
         </SkeletonItem>
