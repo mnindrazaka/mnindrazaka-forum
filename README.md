@@ -78,28 +78,32 @@ Here is the explanation from the most left layer to the most right layer :
 
 ### 3.1. Routes
 
-Lorem ipsum dolor sit amet
+The Routes plays a crucial role in handling the URL routing and mapping it to the appropriate screens to be displayed. This layer is responsible for parsing any query parameters and route parameters and forwarding them to the screens as props, enabling dynamic content rendering based on the URL.
 
 ### 3.2. Screens
 
-Lorem ipsum dolor sit amet
+The Screens consists of React components that provide the user interface (UI) for individual pages or screens. The Screens are designed as dummy components, meaning they do not have their own state management and do not handle data fetching directly. Instead, their main purpose is to combine and orchestrate various smart components (Widgets), working together to create a cohesive and interactive user experience.
 
 ### 3.3. Widgets
 
-Lorem ipsum dolor sit amet
+Widgets are smart components that provide interactivity and functionality to the user interface. These components have their own state. Widgets combine the business logic from the Reducer layer with the UI elements from the Components layer, resulting in smart components that drive the interactive features of the application.
 
 ### 3.4. Components
 
-Lorem ipsum dolor sit amet
+The Components layer consists of dummy components that focus on providing the user interface (UI) for the widgets. These components do not have their own state management and rely on receiving data from the props provided by the widgets.
 
 ### 3.5. Reducers
 
-Lorem ipsum dolor sit amet
+The Reducers layer is responsible for providing the business logic and managing the state used by the widgets. Unlike the components layer, the reducer layer does not handle UI rendering; instead, it focuses on state management and implementing the necessary functionality.
+
+The reducer layer adopts a finite state machine approach to enhance state predictability, particularly when dealing with widgets that involve multiple interactive features. This methodology helps to organize and manage the state transitions and behaviors of complex widgets, ensuring a more robust and maintainable codebase.
 
 ### 3.6. Models
 
-Lorem ipsum dolor sit amet
+The Models layer plays a crucial role in defining the structure and shape of the data used within the Reducer layer. It focuses on establishing clear and consistent data models for entities such as posts and comments.
 
 ### 3.7. Repo
 
-Lorem ipsum dolor sit amet
+The Repo layer serves as a bridge between the Reducer layer and the data sources used within the application. It is responsible for providing data to the Reducer layer, as well as data mutations
+
+the Repo layer abstracts away the complexity of data retrieval and mutation by interacting with various data sources such as APIs, local storage, and cookies. By doing so, the Reducer layer can seamlessly access and manipulate data without being concerned with the specific data retrieval mechanisms.
