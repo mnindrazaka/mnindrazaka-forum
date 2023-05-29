@@ -24,3 +24,11 @@ IsLoading.args = {
   content: `Hi Gaes, ini gimana ya kalau aku buat jadi tebal pake **begini** ?`,
 };
 IsLoading.decorators = [(Story) => <Skeleton isLoading>{Story()}</Skeleton>];
+
+export const IsVoting = Template.bind({});
+IsVoting.args = {
+  datetime: new Date().toISOString(),
+  voteCount: 285,
+  content: `Hi Gaes, ini gimana ya kalau aku buat jadi tebal pake **begini** ?`,
+  isVoting: true,
+};

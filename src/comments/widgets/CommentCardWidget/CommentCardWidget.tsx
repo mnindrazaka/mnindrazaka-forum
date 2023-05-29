@@ -26,6 +26,7 @@ export function CommentCardWidget({
         voteCount={state.voteCount + state.voteChangeAmount}
         onVoteUpPress={() => send({ type: "updateVote", amount: 1 })}
         onVoteDownPress={() => send({ type: "updateVote", amount: -1 })}
+        isVoting={state.type === "voting"}
       />
     </YStack>
   );
