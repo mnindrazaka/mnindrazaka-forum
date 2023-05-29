@@ -30,7 +30,7 @@ https://karirlab-forum-storybook.vercel.app/
 
 ## 2. Development
 
-The Development section provides instructions on how to set up a local development environment for the project. It covers the steps to run the Next.js server and Storybook, along with an overview of the project architecture, folder structure, and the rationale behind the chosen tech stack. It serves as a comprehensive guide for developers to get started with contributing to the project and understanding its development workflow.
+The Development section provides instructions on how to set up a local development environment for the project. It covers the steps to run the Next.js server and Storybook
 
 ### 2.1. Next.js Development Server
 
