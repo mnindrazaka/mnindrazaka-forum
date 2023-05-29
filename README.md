@@ -66,19 +66,19 @@ Here is the explanation from the most left layer to the most right layer :
 
 ### 3.1. Routes
 
-The Routes plays a crucial role in handling the URL routing and mapping it to the appropriate screens to be displayed. This layer is responsible for parsing any query parameters and route parameters and forwarding them to the screens as props, enabling dynamic content rendering based on the URL.
+The [Routes](https://github.com/mnindrazaka/mnindrazaka-forum/tree/d11d827baae2decb7f98625d5629194a32d63604/src/pages) plays a crucial role in handling the URL routing and mapping it to the [appropriate screens](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/pages/index.tsx#L44) to be displayed. This layer is also responsible for [parsing any query parameters and route parameters](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/pages/index.tsx#L12-L13) and forwarding them to the screens as props, enabling dynamic content rendering based on the URL.
 
 ### 3.2. Screens
 
-The Screens consists of React components that provide the user interface (UI) for individual pages or screens. The Screens are designed as dummy components, meaning they do not have their own state management and do not handle data fetching directly. Instead, their main purpose is to combine and orchestrate various smart components (Widgets), working together to create a cohesive and interactive user experience.
+The Screens consists of React components that provide the user interface (UI) for [individual pages or screens](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/posts/screens/PostListScreen.tsx). The Screens are designed as dummy components, meaning they do not have their own state management and do not handle data fetching directly. Instead, their main purpose is to [combine and orchestrate](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/posts/screens/PostDetailScreen.tsx#L22-L35) various smart components (Widgets), working together to create a cohesive and interactive user experience.
 
 ### 3.3. Widgets
 
-Widgets are smart components that provide interactivity and functionality to the user interface. These components have their own state. Widgets combine the business logic from the Reducer layer with the UI elements from the Components layer, resulting in smart components that drive the interactive features of the application.
+Widgets are smart components that provide interactivity and functionality to the user interface. These components have their own state. Widgets combine the [business logic](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/posts/widgets/PostListWidget/PostListWidget.tsx#L33) from the Reducer layer with the [UI elements](https://github.com/mnindrazaka/mnindrazaka-forum/blob/d11d827baae2decb7f98625d5629194a32d63604/src/posts/widgets/PostListWidget/PostListWidget.tsx#L61-L123) from the Components layer, resulting in smart components that drive the interactive features of the application.
 
 ### 3.4. Components
 
-The Components layer consists of dummy components that focus on providing the user interface (UI) for the widgets. These components do not have their own state management and rely on receiving data from the props provided by the widgets.
+The [Components layer](https://github.com/mnindrazaka/mnindrazaka-forum/tree/d11d827baae2decb7f98625d5629194a32d63604/src/posts/components) consists of dummy components that focus on providing the user interface (UI) for the widgets. These components do not have their own state management and rely on receiving data from the props provided by the widgets.
 
 ### 3.5. Reducers
 
