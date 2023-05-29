@@ -19,7 +19,7 @@ const Template: StoryFn<typeof CommentCardWidget> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   datetime: comments[0].datetime,
-  voteCount: comments[0].voteCount,
+  voteCount: 255,
   serial: comments[0].serial,
   content: comments[0].content,
 };
@@ -36,9 +36,7 @@ Default.play = async ({ canvasElement, step }) => {
       )
     );
 
-    await Promise.resolve(
-      expect(canvas.getByText(comments[0].voteCount + 1)).toBeInTheDocument()
-    );
+    await Promise.resolve(expect(canvas.getByText(256)).toBeInTheDocument());
   });
 
   await step("wait for voting to be finished", async () => {
@@ -53,8 +51,6 @@ Default.play = async ({ canvasElement, step }) => {
         })
       )
     );
-    await Promise.resolve(
-      expect(canvas.getByText(comments[0].voteCount - 1)).toBeInTheDocument()
-    );
+    await Promise.resolve(expect(canvas.getByText(255)).toBeInTheDocument());
   });
 };

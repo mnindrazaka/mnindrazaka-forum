@@ -5,7 +5,6 @@ import {
   within,
   userEvent,
   waitForElementToBeRemoved,
-  waitFor,
 } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
