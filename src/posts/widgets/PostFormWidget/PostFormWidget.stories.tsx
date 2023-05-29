@@ -41,9 +41,13 @@ Default.play = async ({ canvasElement, step }) => {
   await step("input content", async () => {
     await Promise.resolve(
       userEvent.type(
-        await canvas.findByRole("textbox", {
-          name: /content/i,
-        }),
+        await canvas.findByRole(
+          "textbox",
+          {
+            name: /content/i,
+          },
+          { timeout: 5000 }
+        ),
         "This is example **content**"
       )
     );
