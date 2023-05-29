@@ -54,7 +54,7 @@ export function PostCard({
             icon={ChevronUp}
             size="$2"
             onPress={onVoteUpPress}
-            aria-label="vote-up"
+            aria-label="vote up"
           />
         </SkeletonItem>
 
@@ -67,7 +67,7 @@ export function PostCard({
             icon={ChevronDown}
             size="$2"
             onPress={onVoteDownPress}
-            aria-label="vote-down"
+            aria-label="vote down"
           />
         </SkeletonItem>
 

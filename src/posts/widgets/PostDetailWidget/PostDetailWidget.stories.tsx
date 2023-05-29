@@ -34,7 +34,7 @@ Default.play = async ({ canvasElement, step }) => {
     await Promise.resolve(
       userEvent.click(
         canvas.getByRole("button", {
-          name: /vote\-up/i,
+          name: /vote\ up/i,
         })
       )
     );
@@ -52,7 +52,7 @@ Default.play = async ({ canvasElement, step }) => {
     await Promise.resolve(
       userEvent.click(
         canvas.getByRole("button", {
-          name: /vote\-down/i,
+          name: /vote\ down/i,
         })
       )
     );
