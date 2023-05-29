@@ -86,6 +86,8 @@ The Reducers layer is responsible for providing the business logic and managing 
 
 The reducer layer adopts a [finite state machine](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/widgets/PostListWidget/PostListWidget.reducer.tsx#L72-L156) to get the next state based on previous state and the action provided by the users. This enhance state predictability, particularly when dealing with widgets that involve multiple interactive features.
 
+Moreover, by using finite state machine, we can use framework like [xstate](https://xstate.js.org/) to [visualize our app flow](https://engineering.kablamo.com.au/posts/2021/finite-state-machines-and-xstate/) and use it as communication tools between engineering, designer, and product team
+
 ### 3.6. Models
 
 The Models layer plays a crucial role in defining the structure and shape of the data used within the Reducer layer. It focuses on establishing clear and consistent data models for entities such as [posts](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/models.ts) and [comments](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/comments/models.ts).
@@ -160,7 +162,7 @@ src
 
 ### 4.1. pages
 
-WE use next.js as our main framework, so we have a [pages folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/pages) that contain the routes of our website.
+We use next.js as our main framework, so we have a [pages folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/pages) that contain the routes of our website.
 
 ### 4.2. posts
 
