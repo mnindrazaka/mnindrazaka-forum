@@ -107,3 +107,92 @@ The Models layer plays a crucial role in defining the structure and shape of the
 The Repo layer serves as a bridge between the Reducer layer and the data sources used within the application. It is responsible for providing data to the Reducer layer, as well as data mutations
 
 the Repo layer abstracts away the complexity of data retrieval and mutation by interacting with various data sources such as APIs, local storage, and cookies. By doing so, the Reducer layer can seamlessly access and manipulate data without being concerned with the specific data retrieval mechanisms.
+
+## 4. Folder Structure
+
+In this section, we will explore the folder structure of the project and provide an overview of the main directories and their purposes.
+
+```
+src
+  - pages
+    - index.ts
+    - posts
+      - new.ts
+      - [slug].ts
+  - products
+    - components
+      - PostCard.tsx
+      - PostCard.stories.tsx
+      - PosForm.tsx
+      - PostForm.stories.tsx
+      - ...
+    - widgets
+      - PostCardWidget.tsx
+      - PostCardWidget.reducer.tsx
+      - PostCardWidget.stories.tsx
+      - PostListWidget.tsx
+      - PostListWidget.reducer.tsx
+      - PostListWidget.stories.tsx
+      - ...
+    - screens
+      - PostListScreen.tsx
+      - PostListScreen.stories.tsx
+      - PostDetailScreen.tsx
+      - PostDetailScreen.stories.tsx
+      - ...
+    - repositories.ts
+    - models.ts
+  - comments
+    - components
+      - CommentCard.tsx
+      - CommentCard.stories.tsx
+      - ...
+    - widgets.ts
+      - CommentCardWidget.tsx
+      - CommentCardWidget.reducer.tsx
+      - CommentCardWidget.stories.tsx
+      - ...
+    - repositories.ts
+    - models.ts
+  - uikits
+    - components
+      - Skeleton
+      - MarkdownView
+      - MarkdownEditor
+  - fakers
+  - utils
+```
+
+### 4.1. pages
+
+WE use next.js as our main framework, so we have a pages folder that contain the routes of our website.
+
+### 4.2. products
+
+We adopt a domain-driven development approach to facilitate a well-organized folder structure. This approach emphasizes the separation and grouping of screens, widgets, components, reducers, models, and repositories into their respective domains, promoting code clarity and maintainability. The product folder contain all layers (mentioned above) that related to the product domain
+
+### 4.3. comments
+
+The comments folder contains the screens, widgets, components, reducers, models, and repositories that related to the comments domain
+
+### 4.4. uikits
+
+The uikits folder contains components that is not belongs to any domain (universal), for example skeleton view, markdown editor, markdown view, etc
+
+### 4.5. fakers
+
+In this project, We don't use API or localstorage as data source, so we need to create mock data as data source. The fakers folder contains all function to interact with the mock data that can be connected to our Repo layer in each domains
+
+### 4.6. utils
+
+Utils contain some general utility function that is not belonging to any domains, for example utility to generate slug for a string and get character length from a markdown
+
+## 5. Tech Stack
+
+### 5.1. Next.js
+
+### 5.2. Typescript
+
+### 5.3. Tamagui
+
+### 5.4. Storybook
