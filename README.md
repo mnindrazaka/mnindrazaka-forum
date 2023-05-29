@@ -67,3 +67,39 @@ npm run build-storybook
 # run output project
 npm run start-storybook
 ```
+
+## 3. Project Architecture
+
+The Project Architecture section provides an overview of the architectural design of the project, explaining the key layers and components involved. This section aims to familiarize developers with the project's structure and highlight the relationships between different parts of the application.
+
+![project architecture](https://i.ibb.co/y6zx0nt/Forum-Project-Architecture.jpg)
+
+Here is the explanation from the most left layer to the most right layer :
+
+### 3.1. Routes
+
+Lorem ipsum dolor sit amet
+
+### 3.2. Screens
+
+Lorem ipsum dolor sit amet
+
+### 3.3. Widgets
+
+Lorem ipsum dolor sit amet
+
+### 3.4. Components
+
+Lorem ipsum dolor sit amet
+
+### 3.5. Reducers
+
+Lorem ipsum dolor sit amet
+
+### 3.6. Models
+
+Lorem ipsum dolor sit amet
+
+### 3.7. Repo
+
+Lorem ipsum dolor sit amet
