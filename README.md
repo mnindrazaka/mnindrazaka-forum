@@ -84,17 +84,24 @@ The Components layer consists of dummy components that focus on providing the us
 
 The Reducers layer is responsible for providing the business logic and managing the state used by the widgets. Unlike the components layer, the reducer layer does not handle UI rendering; instead, it focuses on state management and implementing the necessary functionality.
 
-The reducer layer adopts a finite state machine approach to enhance state predictability, particularly when dealing with widgets that involve multiple interactive features. This methodology helps to organize and manage the state transitions and behaviors of complex widgets, ensuring a more robust and maintainable codebase.
+The reducer layer adopts a [finite state machine](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/widgets/PostListWidget/PostListWidget.reducer.tsx#L72-L156) to get the next state based on previous state and the action provided by the users. This enhance state predictability, particularly when dealing with widgets that involve multiple interactive features.
 
 ### 3.6. Models
 
-The Models layer plays a crucial role in defining the structure and shape of the data used within the Reducer layer. It focuses on establishing clear and consistent data models for entities such as posts and comments.
+The Models layer plays a crucial role in defining the structure and shape of the data used within the Reducer layer. It focuses on establishing clear and consistent data models for entities such as [posts](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/models.ts) and [comments](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/comments/models.ts).
 
 ### 3.7. Repo
 
 The Repo layer serves as a bridge between the Reducer layer and the data sources used within the application. It is responsible for providing data to the Reducer layer, as well as data mutations
 
-the Repo layer abstracts away the complexity of data retrieval and mutation by interacting with various data sources such as APIs, local storage, and cookies. By doing so, the Reducer layer can seamlessly access and manipulate data without being concerned with the specific data retrieval mechanisms.
+the Repo layer abstracts away the complexity of [data retrieval](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/repositories.ts#L13-L26) and [mutation](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/repositories.ts#L28-L41) by interacting with various data sources such as :
+
+- APIs
+- Local Storage
+- Cookies
+- Mock Data
+
+By doing so, the Reducer layer can seamlessly access and manipulate data without being concerned with the specific data retrieval mechanisms.
 
 ## 4. Folder Structure
 
@@ -107,7 +114,7 @@ src
     - posts
       - new.ts
       - [slug].ts
-  - products
+  - posts
     - components
       - PostCard.tsx
       - PostCard.stories.tsx
@@ -153,27 +160,27 @@ src
 
 ### 4.1. pages
 
-WE use next.js as our main framework, so we have a pages folder that contain the routes of our website.
+WE use next.js as our main framework, so we have a [pages folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/pages) that contain the routes of our website.
 
-### 4.2. products
+### 4.2. posts
 
-We adopt a domain-driven development approach to facilitate a well-organized folder structure. This approach emphasizes the separation and grouping of screens, widgets, components, reducers, models, and repositories into their respective domains, promoting code clarity and maintainability. The product folder contain all layers (mentioned above) that related to the product domain
+We adopt a domain-driven development approach to facilitate a well-organized folder structure. This approach emphasizes the separation and grouping of screens, widgets, components, reducers, models, and repositories into their respective domains, promoting code clarity and maintainability. The [posts folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts) contain all layers (mentioned above) that related to the posts domain
 
 ### 4.3. comments
 
-The comments folder contains the screens, widgets, components, reducers, models, and repositories that related to the comments domain
+The [comments folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/comments) contains the screens, widgets, components, reducers, models, and repositories that related to the comments domain
 
 ### 4.4. uikits
 
-The uikits folder contains components that is not belongs to any domain (universal), for example skeleton view, markdown editor, markdown view, etc
+The [uikits folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/uikits) contains components that is not belongs to any domain (universal), for example [skeleton view](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/uikits/components/Skeleton/SkeletonItem.tsx), [markdown editor](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/uikits/components/MarkdownEditor/MarkdownEditor.tsx), [markdown view](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/uikits/components/MarkdownView/MarkdownView.tsx), etc
 
 ### 4.5. fakers
 
-In this project, We don't use API or localstorage as data source, so we need to create mock data as data source. The fakers folder contains all function to interact with the mock data that can be connected to our Repo layer in each domains
+In this project, We don't use API or localstorage as data source, so we need to create mock data as data source. The [fakers folder](https://github.com/mnindrazaka/mnindrazaka-forum/tree/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/fakers) contains all function to [interact with the mock data](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/fakers/posts.ts#L424-L452) that can be [connected to our Repo layer](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/repositories.ts#L13-L26) in each domains
 
 ### 4.6. utils
 
-Utils contain some general utility function that is not belonging to any domains, for example utility to generate slug for a string and get character length from a markdown
+Utils contain some general utility function that is not belonging to any domains, for example utility to [generate slug for a string](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/utils/index.tsx#L25-L32) and [get character length from a markdown](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/utils/index.tsx#L8-L23)
 
 ## 5. Tech Stack
 
