@@ -1,20 +1,8 @@
-# Forum Website
+# M. Nindra Zaka Forum
 
 This is the example of forum website using [next.js](https://nextjs.org/), [typescript](https://www.typescriptlang.org/), [tamagui](https://tamagui.dev/), and [storybook](https://storybook.js.org/).
 
-**Key Features:**
-
-**Show Post:** Browse through an extensive collection of posts shared by users. From thought-provoking discussions to informative articles, there's something for everyone.
-
-**Create Post:** Share your own ideas, experiences, or questions by creating a new post. Craft your content using a rich text editor and add relevant tags to make it easily discoverable.
-
-**Vote Post:** Express your opinion on posts by upvoting or downvoting them. This helps highlight the most valuable and interesting content, ensuring that the best posts rise to the top.
-
-**Create Comment:** Engage in conversations by leaving comments on posts. Share your insights, provide feedback, or ask follow-up questions to contribute to the ongoing discussions.
-
-**Vote Comment:** Show appreciation for insightful comments by upvoting them. This encourages meaningful interactions and helps to identify the most helpful and well-received comments.
-
-**Nested Comment:** Enjoy threaded conversations with nested comments. Reply directly to specific comments to maintain clear and organized discussions.
+It has some features like show post, create a new post, vote post, create a comment, vote the comment, and replied to a comment
 
 ## 1. Demo
 
