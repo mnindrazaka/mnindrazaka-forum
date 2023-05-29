@@ -9,13 +9,11 @@ export type CommentCardWidgetProps = {
   content: string;
   datetime: string;
   onCommentButtonPress?: () => void;
-  hasChildren?: boolean;
 } & XStackProps;
 
 export function CommentCardWidget({
   serial,
   voteCount,
-  hasChildren,
   ...props
 }: CommentCardWidgetProps) {
   const [state, send] = useCommentCardWidgetReducer({ serial, voteCount });

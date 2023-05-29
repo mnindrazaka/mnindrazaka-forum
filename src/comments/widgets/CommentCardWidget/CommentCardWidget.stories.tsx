@@ -58,12 +58,3 @@ Default.play = async ({ canvasElement, step }) => {
     );
   });
 };
-
-export const HasChildren = Template.bind({});
-HasChildren.args = {
-  datetime: new Date().toISOString(),
-  voteCount: 255,
-  serial: "1",
-  content: "Lorem Ipsum Dolor **Sit Amet**",
-  hasChildren: true,
-};
