@@ -31,7 +31,7 @@ export function PostDetailWidgetContent({
   return (
     <>
       <Skeleton isLoading={isLoading}>
-        <PostCardWidget {...post} />
+        <PostCardWidget key={post.serial} {...post} />
       </Skeleton>
       <AlertDialog open={state.type === "error"}>
         <AlertDialog.Portal>
