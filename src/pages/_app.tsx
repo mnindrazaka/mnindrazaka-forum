@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Karirlab Forum</title>
+        <title>M. Nindra Zaka Forum</title>
       </Head>
       <Script
         id="tamagui-animations-mount"
