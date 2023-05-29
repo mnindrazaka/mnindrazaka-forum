@@ -6,12 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "serve-storybook": "serve storybook-static",
-    "test-storybook": "test-storybook"
+    "start-storybook": "serve storybook-static",
+    "test-storybook": "test-storybook",
+    "coverage-storybook": "test-storybook --coverage"
   },
   "dependencies": {
     "@tamagui/config": "^1.29.4",
