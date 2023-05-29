@@ -66,7 +66,7 @@ export const IsError = Template.bind({});
 IsError.args = {
   slug: "no-slug-like-this",
 };
-IsError.play = async ({ canvasElement, step }) => {
+IsError.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   await waitFor(() => canvas.findByRole("alertdialog"));
