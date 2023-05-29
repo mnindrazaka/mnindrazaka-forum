@@ -27,6 +27,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "storybook-dark-mode",
+    "@storybook/addon-coverage",
   ],
   framework: {
     name: "@storybook/nextjs",
