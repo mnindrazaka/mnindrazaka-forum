@@ -17,7 +17,11 @@ export function CommentForm({
 }: CommentFormProps) {
   return (
     <YStack space="$3">
-      <MarkdownEditor value={content} onChange={onChangeContent} />
+      <MarkdownEditor
+        value={content}
+        onChange={onChangeContent}
+        label="content"
+      />
       <XStack>
         <Button
           onPress={onSubmit}
