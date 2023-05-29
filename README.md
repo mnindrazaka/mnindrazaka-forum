@@ -188,30 +188,38 @@ In this section, we will explore the tech stack that is used in the project and 
 
 ### 5.1. Next.js
 
-One of the primary reasons for selecting Next.js in our tech stack is its robust support for server-side rendering (SSR), which greatly benefits search engine optimization (SEO) by ensuring that our website's content is readily accessible to search engines. Additionally, Next.js offers static site generation (SSG) and incremental static regeneration (ISR) capabilities, allowing us to pre-generate and update pages as needed, effectively reducing server computational resources and enhancing overall performance.
+https://nextjs.org/
 
-Furthermore, Next.js enjoys widespread adoption among developers, making it a popular choice in the development community. This popularity translates to a wealth of available resources, extensive documentation, and a thriving ecosystem, which greatly facilitates the onboarding process for new developers joining the project.
+We chose Next.js for its robust support of server-side rendering (SSR), benefiting SEO by ensuring search engine accessibility. Next.js also offers static site generation (SSG) and incremental static regeneration (ISR), reducing server resources and improving performance.
+
+Next.js's widespread adoption among developers provides abundant resources, documentation, and a thriving ecosystem. This streamlines onboarding for new team members.
 
 ### 5.2. Typescript
 
-I incorporate TypeScript into our tech stack stems from the need to address the limitations of JavaScript's dynamic typing, which can result in runtime errors and make code maintenance challenging. By adopting TypeScript, we gain the advantage of static typing, which enables us to catch potential errors during development and promotes code reliability and maintainability.
+https://www.typescriptlang.org/
 
-In addition to its static typing features, TypeScript boasts a strong and vibrant community. It is widely adopted by developers across various domains, making it easier to find resources, documentation, and community support.
+We chose TypeScript to address JavaScript's dynamic typing limitations, reducing runtime errors and enhancing code maintainability. TypeScript's static typing catches errors during development, ensuring code reliability.
+
+Moreover, TypeScript's strong community and wide adoption facilitate resource availability, documentation, and community support.
 
 ### 5.3. Tamagui
 
+https://tamagui.dev/
+
 Our adoption of Tamagui in our tech stack reflects our preference for the CSS-in-JS approach, which provides a superior developer experience when styling components within JavaScript or TypeScript, eliminating the need for separate CSS files and mitigating CSS specificity issues. However, we acknowledge that this approach can introduce runtime computation and potentially impact performance.
 
-Tamagui addresses this tradeoff by offering the best of both worlds. It allows us to utilize the CSS-in-JS paradigm to achieve a seamless developer experience while generating a static CSS file during the build process. This means that the styles are pre-compiled and not computed at runtime, resulting in improved performance and efficiency.
+Tamagui addresses this tradeoff by offering the best of both worlds. It allows us to utilize the CSS-in-JS paradigm to achieve a seamless developer experience while generating a static CSS file during the [build process](https://tamagui.dev/docs/intro/why-a-compiler). This means that the styles are pre-compiled and not computed at runtime, resulting in improved performance and efficiency.
 
-Additionally, Tamagui offers an API that is similar to the popular Chakra UI library, widely adopted within the development community. This similarity enables new developers to quickly adopt and become familiar with Tamagui, reducing the learning curve and promoting rapid onboarding to the project.
+Additionally, Tamagui offers an API that is similar to the popular Chakra UI Library by using [style props](https://tamagui.dev/docs/components/text). This similarity enables new developers to quickly adopt and become familiar with Tamagui, reducing the learning curve and promoting rapid onboarding to the project.
 
 ### 5.4. Storybook
 
+https://storybook.js.org/
+
 Storybook plays a pivotal role in our tech stack as it addresses the challenges faced by frontend engineers when creating and documenting numerous components. As we develop a wide range of components, it can be difficult to keep track of existing ones, leading to the inadvertent duplication of efforts.
 
-With Storybook, we can efficiently document and showcase our components in an organized and easily accessible manner. It acts as a centralized hub where developers can explore, test, and interact with individual components. This eliminates the need to recreate existing components unknowingly and promotes code reuse and consistency throughout the project.
+With Storybook, we can efficiently [document and showcase](https://mnindrazaka-forum-storybook.vercel.app/) our components in an organized and easily accessible manner. It acts as a centralized hub where developers can explore, test, and interact with individual components. This eliminates the need to recreate existing components unknowingly and promotes code reuse and consistency throughout the project.
 
 Furthermore, Storybook significantly aids the onboarding process for new developers joining the team. By providing a comprehensive documentation platform for components, Storybook allows newcomers to familiarize themselves with the available components, understand their usage, and integrate them into their work seamlessly.
 
-Additionally, Storybook can be integrated with test runners such as Jest, enabling automated testing and test coverage for our components. This integration allows us to establish comprehensive and reliable test suites, ensuring the quality and stability of our components throughout their lifecycle.
+Additionally, Storybook can be [integrated with test runners](https://github.com/mnindrazaka/mnindrazaka-forum/blob/a3144ed97dc8d96f9fb8448a5b227ac94c2bbbf6/src/posts/widgets/PostListWidget/PostListWidget.stories.tsx#L21-L56) such as Jest, enabling automated testing and test coverage for our components. This integration allows us to establish comprehensive and reliable test suites, ensuring the quality and stability of our components throughout their lifecycle.
