@@ -35,8 +35,6 @@ type GetCommentListParams = {
 };
 
 export function getCommentList({ postSlug }: GetCommentListParams) {
-  console.log(comments);
-
   return simulateFetch(() => {
     const filteredComments = comments.filter((comment) =>
       comment.postSlug.toLowerCase().includes(postSlug)

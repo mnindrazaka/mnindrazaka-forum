@@ -37,7 +37,6 @@ export function PostCard({
   onCommentButtonPress,
   ...containerProps
 }: PostCardProps) {
-  console.log("isVoting", isVoting);
   return (
     <XStack
       space="$4"
