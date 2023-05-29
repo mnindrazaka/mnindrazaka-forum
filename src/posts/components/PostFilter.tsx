@@ -44,6 +44,7 @@ export function PostFilter({
       {...containerProps}
     >
       <Input
+        aria-label="search post"
         placeholder="Search Post"
         width="100%"
         maxWidth="100%"
